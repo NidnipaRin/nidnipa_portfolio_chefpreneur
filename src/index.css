@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FFF5E1;
+    color: #4A3F35;
+    font-family: 'Prompt', sans-serif;
+  }
+}
+
+.font-serif-thai {
+  font-family: 'Noto Serif Thai', serif;
+  line-height: 1.55;
+}
+
+.font-handwriting {
+  font-family: 'Caveat', cursive;
+}
+
+/* Japanese Craft Stamp Badge */
+.stamp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed rgba(155, 29, 48, 0.45);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: #9B1D30;
+  background-color: rgba(247, 236, 212, 0.85);
+}
+
+.stamp-box {
+  border: 1.5px solid rgba(155, 29, 48, 0.4);
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: #800020;
+  background-color: rgba(255, 245, 225, 0.9);
+}
+
+/* Subtle paper texture & card depth */
+.bg-texture {
+  background-color: #FFF5E1;
+}
+
+.shadow-paper,
+.paper-card {
+  box-shadow: 0 4px 20px rgba(128, 0, 32, 0.04);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF5E1;
+}
+::-webkit-scrollbar-thumb {
+  background: #EFE2C6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9B1D30;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Print styles for exact 4-page PDF application */
+@media print {
+  body {
+    background-color: white !important;
+    background-image: none !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+  .print-page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 12mm 15mm;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none;
+  }
+}
+
+/* Floating watercolor sticker with gentle tilt */
+@keyframes gentleTilt {
+  0%, 100% {
+    transform: translateY(0px) rotate(-3.5deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(4deg);
+  }
+}
+
+@keyframes gentleTiltReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(3.5deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-4deg);
+  }
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(45deg);
+  }
+}
+
+.animate-gentle-tilt {
+  animation: gentleTilt 4.5s ease-in-out infinite;
+}
+
+.animate-gentle-tilt-reverse {
+  animation: gentleTiltReverse 5s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: sparkleTwinkle 2.2s ease-in-out infinite;
+}
+
+.animate-twinkle-delay {
+  animation: sparkleTwinkle 2.2s ease-in-out infinite 1.1s;
+}
