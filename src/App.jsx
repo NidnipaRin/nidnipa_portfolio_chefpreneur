@@ -94,8 +94,6 @@ export default function App() {
         <Navbar
           currentPage={currentPage}
           onNavigate={navigateTo}
-          onOpenPitch={() => setIsPitchOpen(true)}
-          onOpenPrint={handlePrint}
         />
 
         {/* Dynamic Page Rendering based on URL Route */}
@@ -104,6 +102,7 @@ export default function App() {
             <HomeView
               onNavigate={navigateTo}
               onOpenPitch={() => setIsPitchOpen(true)}
+              onOpenPrint={handlePrint}
             />
           )}
 

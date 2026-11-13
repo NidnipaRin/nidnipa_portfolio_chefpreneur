@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { PlayCircle, FileText, Home, Menu, X } from 'lucide-react';
+import { Home, Menu, X, Globe } from 'lucide-react';
 import { candidateInfo } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../data/translations';
 
-const navLinks = [
-  { key: 'home', label: 'Home', icon: Home },
-  { key: 'heritage', label: 'Our Heritage' },
-  { key: 'hybrid', label: 'Hybrid Skills' },
-  { key: 'menu', label: 'Signature Dishes' },
-  { key: 'business', label: 'Business Concept' },
-];
-
-export default function Navbar({ currentPage, onNavigate, onOpenPitch, onOpenPrint }) {
+export default function Navbar({ currentPage, onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { lang, toggleLang, isEn } = useLanguage();
+  const t = translations[lang].nav;
+
+  const navLinks = [
+    { key: 'home', label: t.home, icon: Home },
+    { key: 'heritage', label: t.heritage },
+    { key: 'hybrid', label: t.hybrid },
+    { key: 'menu', label: t.menu },
+    { key: 'business', label: t.business },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -52,7 +56,7 @@ export default function Navbar({ currentPage, onNavigate, onOpenPitch, onOpenPri
                 {candidateInfo.brand}
               </span>
               <span className="text-[10px] text-[#786E64] tracking-widest uppercase block leading-tight">
-                Chefpreneur 2026
+                {t.chefpreneurYear}
               </span>
             </div>
           </button>
@@ -76,19 +80,17 @@ export default function Navbar({ currentPage, onNavigate, onOpenPitch, onOpenPri
 
           {/* Right Actions */}
           <div className="flex items-center gap-2">
+            {/* Language Toggle Button */}
             <button
-              onClick={onOpenPitch}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#4A3F35]/20 text-[#4A3F35] text-xs font-medium hover:border-[#9B1D30] hover:text-[#9B1D30] transition-colors cursor-pointer"
+              onClick={toggleLang}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#EFE2C6] bg-white/70 hover:bg-[#F7ECD4] text-xs font-semibold text-[#4A3F35] transition shadow-2xs cursor-pointer select-none"
+              title={isEn ? "เปลี่ยนเป็นภาษาไทย (TH)" : "Switch to English (EN)"}
+              aria-label="Toggle language"
             >
-              <PlayCircle className="w-3.5 h-3.5 text-[#9B1D30]" />
-              <span>Video Pitch</span>
-            </button>
-            <button
-              onClick={onOpenPrint}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#9B1D30] text-white text-xs font-semibold hover:bg-[#B0303C] transition-colors shadow-xs cursor-pointer"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>PDF Portfolio</span>
+              <Globe className="w-3.5 h-3.5 text-[#9B1D30]" />
+              <span className={!isEn ? "text-[#9B1D30] font-bold" : "text-[#786E64]"}>TH</span>
+              <span className="text-[#EFE2C6] font-light">|</span>
+              <span className={isEn ? "text-[#9B1D30] font-bold" : "text-[#786E64]"}>EN</span>
             </button>
 
             {/* Mobile Menu Toggle */}
@@ -122,22 +124,6 @@ export default function Navbar({ currentPage, onNavigate, onOpenPitch, onOpenPri
                 {link.label}
               </button>
             ))}
-            <div className="flex gap-2 pt-2">
-              <button
-                onClick={() => { onOpenPitch(); setMobileOpen(false); }}
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border border-[#4A3F35]/20 text-[#4A3F35] text-xs font-medium cursor-pointer"
-              >
-                <PlayCircle className="w-3.5 h-3.5 text-[#9B1D30]" />
-                <span>Video Pitch</span>
-              </button>
-              <button
-                onClick={() => { onOpenPrint(); setMobileOpen(false); }}
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-[#9B1D30] text-white text-xs font-semibold cursor-pointer"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>PDF</span>
-              </button>
-            </div>
           </nav>
         </div>
       </header>

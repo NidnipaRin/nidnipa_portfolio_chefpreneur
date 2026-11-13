@@ -255,3 +255,27 @@ export const videoPitchScript = [
       "เพราะรสชาติมรดกไม่ควรถูกเก็บไว้แค่ในความทรงจำ แต่ควรเติบโตเป็นธุรกิจจริง ด้วยดีกรีเชฟอาหารไทยมืออาชีพ และทักษะโปรแกรมเมอร์ รินพร้อมแล้วที่จะเป็น Chefpreneur คนต่อไปที่ The Food School ค่ะ!",
   },
 ];
+
+export const videoPitchScriptEn = [
+  {
+    step: "01",
+    time: "0:00 - 0:08",
+    topic: "Who You Are & Why Food Business",
+    speech:
+      "Hello, I'm Rin Nidnipa from Nidnipa.K. I grew up with the comforting aroma of my mother's Chinese curry—she was the master cook behind an iconic diner honored with the Peep Pitsadan award. When the shop closed on her wedding day, she passed all the secret culinary wisdom directly down to me.",
+  },
+  {
+    step: "02",
+    time: "0:09 - 0:20",
+    topic: "Your Dream Business & Target Audience",
+    speech:
+      "My dream business is revitalizing this legendary Chinese curry into a modern comfort food brand, complemented by 15-minute Smart Cooking Kits and digital e-commerce systems, serving modern urbanites who crave authentic, soulful heritage flavors.",
+  },
+  {
+    step: "03",
+    time: "0:21 - 0:30",
+    topic: "Why This Business Must Exist",
+    speech:
+      "Because heritage flavors should not remain locked in nostalgia—they must evolve into sustainable culinary businesses. With certified Thai chef mastery and developer systems thinking, I am 100% ready to become the next Chefpreneur at The Food School!",
+  },
+];

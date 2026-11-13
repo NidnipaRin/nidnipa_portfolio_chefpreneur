@@ -22,8 +22,13 @@ import {
 } from "lucide-react";
 import Reveal from "../components/Reveal";
 import { candidateInfo } from "../data/portfolioData";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../data/translations";
 
 export default function HybridEdgePage({ onBack, onNavigate }) {
+  const { lang, isEn } = useLanguage();
+  const t = translations[lang].hybridPage;
+
   // State for Interactive Certificate Stack
   const [activeCert, setActiveCert] = useState(0);
 
@@ -36,42 +41,78 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
   // State for Image Lightbox (viewing any image in full size)
   const [lightboxImg, setLightboxImg] = useState(null);
 
-  // Certificate Data
-  const certificates = [
-    {
-      id: "culinary",
-      badgeNum: "01.",
-      label: "Culinary Master",
-      title: "เชฟอาหารไทยมืออาชีพ (Master Thai Chef)",
-      issuer: "THACCA & กรมส่งเสริมอุตสาหกรรม (DIPROM)",
-      year: "2567",
-      desc: "ผ่านการอบรมโครงการ OFOS (THACCA) เข้าใจลึกซึ้งถึงธรรมชาติของเครื่องเทศ การเคี่ยวน้ำแกง และมาตรฐานสุขอนามัยในครัวมืออาชีพ พร้อมผสานศาสตร์เค้กและขนมปังจาก ABC Cooking Studio ที่ช่วยฝึกความเป๊ะในการชั่งตวงอัตราส่วนอย่างแม่นยำ",
-      image: "/images/hybrid/cert_thai_chef.jpg",
-      tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
-    },
-    {
-      id: "cake",
-      badgeNum: "02.",
-      label: "Cake & Pastry",
-      title: "Basic 18 Lessons Cake Course",
-      issuer: "ABC Cooking Studio Thailand & Worldwide",
-      year: "2024",
-      desc: "มาตรฐานการทำขนมเค้ก เบเกอรี่ และพาสทรีระดับสากลจากสตูดิโอสอนทำอาหารชั้นนำของญี่ปุ่น เข้าใจโครงสร้างเคมีของแป้ง น้ำตาล และเนยอย่างลึกซึ้ง",
-      image: "/images/hybrid/cert_cake.jpg",
-      tagColor: "bg-[#8FA882]/20 text-[#738C66] border-[#8FA882]/40",
-    },
-    {
-      id: "bread",
-      badgeNum: "03.",
-      label: "Artisan Bread",
-      title: "Basic 24 Lessons Bread Course",
-      issuer: "ABC Cooking Studio Thailand & Worldwide",
-      year: "2024",
-      desc: "หลักสูตรการนวด หมัก และอบขนมปังโฮมเมดสไตล์ญี่ปุ่น 24 รูปแบบ ทั้งขนมปังเนื้อนุ่ม ขนมปังธัญพืชเพื่อสุขภาพ และขนมปังขึ้นรูปเชิงช่างฝีมือ",
-      image: "/images/hybrid/cert_bread.jpg",
-      tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
-    },
-  ];
+  // Certificate Data (Bilingual)
+  const certificates = isEn
+    ? [
+        {
+          id: "culinary",
+          badgeNum: "01.",
+          label: "Culinary Master",
+          title: "Certified Professional Thai Chef (Master Thai Chef)",
+          issuer: "THACCA & Dept. of Industrial Promotion (DIPROM)",
+          year: "2024",
+          desc: "Completed the OFOS national culinary program (THACCA). Deep understanding of herbs, aromatics, broth reduction, and professional kitchen hygiene. Combined with ABC Cooking Studio Japan baking discipline for gram-level precision.",
+          image: "/images/hybrid/cert_thai_chef.jpg",
+          tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
+        },
+        {
+          id: "cake",
+          badgeNum: "02.",
+          label: "Cake & Pastry",
+          title: "Basic 18 Lessons Cake Course",
+          issuer: "ABC Cooking Studio Thailand & Worldwide",
+          year: "2024",
+          desc: "International pastry and cake curriculum from Japan's leading culinary studio. Deep understanding of flour chemistry, sugar crystallization, and butter emulsification.",
+          image: "/images/hybrid/cert_cake.jpg",
+          tagColor: "bg-[#8FA882]/20 text-[#738C66] border-[#8FA882]/40",
+        },
+        {
+          id: "bread",
+          badgeNum: "03.",
+          label: "Artisan Bread",
+          title: "Basic 24 Lessons Bread Course",
+          issuer: "ABC Cooking Studio Thailand & Worldwide",
+          year: "2024",
+          desc: "Japanese artisan bread making across 24 master modules—covering soft doughs, whole-grain loaves, and artisanal shaping techniques.",
+          image: "/images/hybrid/cert_bread.jpg",
+          tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
+        },
+      ]
+    : [
+        {
+          id: "culinary",
+          badgeNum: "01.",
+          label: "Culinary Master",
+          title: "เชฟอาหารไทยมืออาชีพ (Master Thai Chef)",
+          issuer: "THACCA & กรมส่งเสริมอุตสาหกรรม (DIPROM)",
+          year: "2567",
+          desc: "ผ่านการอบรมโครงการ OFOS (THACCA) เข้าใจลึกซึ้งถึงธรรมชาติของเครื่องเทศ การเคี่ยวน้ำแกง และมาตรฐานสุขอนามัยในครัวมืออาชีพ พร้อมผสานศาสตร์เค้กและขนมปังจาก ABC Cooking Studio ที่ช่วยฝึกความเป๊ะในการชั่งตวงอัตราส่วนอย่างแม่นยำ",
+          image: "/images/hybrid/cert_thai_chef.jpg",
+          tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
+        },
+        {
+          id: "cake",
+          badgeNum: "02.",
+          label: "Cake & Pastry",
+          title: "Basic 18 Lessons Cake Course",
+          issuer: "ABC Cooking Studio Thailand & Worldwide",
+          year: "2024",
+          desc: "มาตรฐานการทำขนมเค้ก เบเกอรี่ และพาสทรีระดับสากลจากสตูดิโอสอนทำอาหารชั้นนำของญี่ปุ่น เข้าใจโครงสร้างเคมีของแป้ง น้ำตาล และเนยอย่างลึกซึ้ง",
+          image: "/images/hybrid/cert_cake.jpg",
+          tagColor: "bg-[#8FA882]/20 text-[#738C66] border-[#8FA882]/40",
+        },
+        {
+          id: "bread",
+          badgeNum: "03.",
+          label: "Artisan Bread",
+          title: "Basic 24 Lessons Bread Course",
+          issuer: "ABC Cooking Studio Thailand & Worldwide",
+          year: "2024",
+          desc: "หลักสูตรการนวด หมัก และอบขนมปังโฮมเมดสไตล์ญี่ปุ่น 24 รูปแบบ ทั้งขนมปังเนื้อนุ่ม ขนมปังธัญพืชเพื่อสุขภาพ และขนมปังขึ้นรูปเชิงช่างฝีมือ",
+          image: "/images/hybrid/cert_bread.jpg",
+          tagColor: "bg-[#9B1D30]/15 text-[#9B1D30] border-[#9B1D30]/30",
+        },
+      ];
 
   return (
     <div className="min-h-screen bg-[#FFF5E1] text-[#4A3F35] py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative selection:bg-[#EFE2C6] selection:text-[#9B1D30]">
@@ -86,27 +127,26 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
             className="group inline-flex items-center gap-2 text-xs font-medium text-[#4A3F35] hover:text-[#9B1D30] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#786E64] group-hover:-translate-x-0.5 transition-transform" />
-            <span>กลับสู่ Home</span>
+            <span>{isEn ? "Back to Home" : "กลับสู่ Home"}</span>
           </button>
           <div className="flex items-center gap-2">
             <span className="stamp-badge">
-              From Kitchen to Code & Community
+              From Kitchen to Code &amp; Community
             </span>
           </div>
         </div>
 
-
-          {/* ========================================================
-              PAGE HERO TITLE: CHEF-DEVELOPER'S SCRAPBOOK
-              ======================================================== */}
-          <Reveal>
+        {/* ========================================================
+            PAGE HERO TITLE: CHEF-DEVELOPER'S SCRAPBOOK
+            ======================================================== */}
+        <Reveal>
           <div className="text-center max-w-4xl mx-auto space-y-4">
             <span className="font-serif text-xs uppercase tracking-[0.25em] text-[#9B1D30] font-semibold block">
-              MY PROFILE, EXPERIENCE & CULINARY JOURNEY
+              {t.heroTag}
             </span>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] xl:text-5xl font-serif-thai font-bold text-[#4A3F35] leading-[1.8] sm:leading-[1.85] lg:leading-[1.9] space-y-2 sm:space-y-3">
-              <span className="block">บันทึกประสบการณ์และทักษะรอบด้าน...</span>
-              <span className="block">ที่หล่อหลอมตัวตนของฉันในวันนี้</span>
+              <span className="block">{t.headline1}</span>
+              <span className="block">{t.headline2}</span>
             </h1>
             <div className="flex items-center justify-center gap-3 text-[#9B1D30]/40 py-1">
               <span className="h-px w-10 bg-[#9B1D30]/20"></span>
@@ -114,40 +154,37 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
               <span className="h-px w-10 bg-[#9B1D30]/20"></span>
             </div>
             <p className="text-sm sm:text-base text-[#786E64] font-light leading-relaxed max-w-2xl mx-auto">
-              รวบรวมทุกก้าวของการเรียนรู้และลงมือทำจริง—ตั้งแต่พื้นฐานการเรียนเชฟ รางวัลจากเวทีการแข่งขัน การฝึกคิดวางระบบอีคอมเมิร์ซ ไปจนถึงการทำเพจและเปิดรับออเดอร์จริง เพื่อเป็นรากฐานสำคัญในการก้าวสู่ Chefpreneur
+              {t.heroDesc}
             </p>
           </div>
         </Reveal>
 
-{/* ----------------------------------------------------
-    NEW SECTION: BACKGROUND IMAGE + INFO BOX
----------------------------------------------------- */}
-<section className="mt-12 mb-12">
-  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-    <div className="lg:col-span-5">
-      <img src="/images/my_background.png" alt="Portrait" className="w-full max-w-[500px] object-cover" />
-    </div>
-    <div className="lg:col-span-7 relative">
-      <div className="bg-[#F7ECD4]/85 rounded-3xl p-6 sm:p-8 border border-[#EFE2C6] shadow-xs transform -rotate-1">
-        <div className="absolute -top-3.5 left-6 bg-[#9B1D30]/15 border border-[#9B1D30]/30 backdrop-blur-xs px-3 py-1 rounded-sm text-[11px] font-mono tracking-wider font-semibold text-[#800020] shadow-2xs rotate-[-2deg]">
-          MY BACKGROUND &amp; 100% READINESS
-        </div>
-        <h3 className="text-lg sm:text-xl font-serif-thai font-bold text-[#4A3F35] leading-[1.8] sm:leading-[1.85] mb-3">
-          จากนักออกแบบเครื่องประดับระดับ Luxury... สู่วันที่เป็น "คุณแม่" และพร้อมทุ่มเท 100% บนเส้นทางอาหาร
-        </h3>
-        <p className="text-sm text-[#786E64] leading-relaxed">
-          ฉันไม่ได้จบสายอาหารมาโดยตรง แต่เริ่มต้นอาชีพในฐานะ Luxury Jewelry Designer ที่ดูแลและวาดแบบเครื่องประดับมูลค่าหลักหมื่นถึงหลักล้านบาท ประสบการณ์นั้นหล่อหลอมให้ฉันใส่ใจในรายละเอียดขั้นสุด เข้าใจศิลปะการจัดวาง และรู้วิธีสร้างมูลค่าเพิ่มให้สินค้า โดยในระหว่างที่ทำงานประจำ ฉันได้ใช้เวลาว่างไปกับการเติมเต็มความสุขที่ฉันรัก นั่นคือการไปเรียนทำเค้กและขนมปังอย่างจริงจัง
-          จนเมื่อก้าวเข้าสู่บทบาทของ "การเป็นคุณแม่" และปรับรูปแบบงานมาเป็นฟรีแลนซ์ ฉันยิ่งเข้าใจคุณค่าของมื้ออาหารที่แม่ทำให้กิน จึงตัดสินใจเดินหน้าต่อยอดความฝันอย่างเต็มตัว ทั้งการไปเรียนหลักสูตรเชฟอาหารไทยเพิ่มเติม และการเรียนรู้ระบบอีคอมเมิร์ซ วันนี้ฉันมีความพร้อมด้านเวลา 100% ที่จะทุ่มเทให้กับโปรแกรม 9 เดือนของ The Food School เพื่อเจียระไนแกงกะหรี่จีนรสมือแม่ ให้กลายเป็นแบรนด์ใหม่ที่งดงามและแข็งแกร่งที่สุด
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+        {/* ----------------------------------------------------
+            NEW SECTION: BACKGROUND IMAGE + INFO BOX
+        ---------------------------------------------------- */}
+        <section className="mt-12 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-5">
+              <img src="/images/my_background.png" alt="Portrait" className="w-full max-w-[500px] object-cover" />
+            </div>
+            <div className="lg:col-span-7 relative">
+              <div className="bg-[#F7ECD4]/85 rounded-3xl p-6 sm:p-8 border border-[#EFE2C6] shadow-xs transform -rotate-1">
+                <div className="absolute -top-3.5 left-6 bg-[#9B1D30]/15 border border-[#9B1D30]/30 backdrop-blur-xs px-3 py-1 rounded-sm text-[11px] font-mono tracking-wider font-semibold text-[#800020] shadow-2xs rotate-[-2deg]">
+                  {t.readinessTag}
+                </div>
+                <h3 className="text-lg sm:text-xl font-serif-thai font-bold text-[#4A3F35] leading-[1.8] sm:leading-[1.85] mb-3">
+                  {t.readinessHeadline}
+                </h3>
+                <p className="text-sm text-[#786E64] leading-relaxed">
+                  {t.readinessBody}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ========================================================
             SECTION 1: CULINARY MASTERY & GLOBAL SPOTLIGHT
-            ความเชี่ยวชาญด้านอาหารและรางวัลระดับสากล
             ======================================================== */}
         <section className="space-y-16 pt-4">
           {/* Section Header */}
@@ -160,22 +197,20 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                 <span className="stamp-badge">Part One • Culinary Mastery</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-serif-thai font-bold text-[#4A3F35] leading-normal sm:leading-relaxed">
-                พื้นฐานครัวไทย ความแม่นยำ และรางวัลความภูมิใจ
+                {t.part1Title}
               </h2>
               <p className="text-xs sm:text-sm text-[#786E64] font-light">
-                ผสานความเข้าใจในรากเหง้าอาหารไทย เข้ากับวินัยการชั่งตวงระดับกรัมจากเบเกอรี่ เพื่อเปลี่ยนสูตรกะด้วยสายตาของแม่ ให้เป็นมาตรฐานใหม่ที่นิ่งเป๊ะทุกชาม
+                {isEn
+                  ? "Fusing a deep understanding of Thai culinary roots with gram-level precision from the science of baking, transforming mom's intuitive estimation into a new standard that is consistent in every bowl."
+                  : "ผสานความเข้าใจในรากเหง้าอาหารไทย เข้ากับวินัยการชั่งตวงระดับกรัมจากเบเกอรี่ เพื่อเปลี่ยนสูตรกะด้วยสายตาของแม่ ให้เป็นมาตรฐานใหม่ที่นิ่งเป๊ะทุกชาม"}
               </p>
             </div>
           </Reveal>
 
           {/* ----------------------------------------------------
-              BLOCK 1.1: CHEF PORTRAIT (LEFT) & THE TRILOGY OF MASTERY (RIGHT)
-              ภาพเชฟเด่นชัดด้านซ้าย นอกกล่องส้ม (ขนาดใหญ่เท่ากล่องส้ม + เอียงดุ๊กดิ๊ก + ดาววิบวับ)
+              BLOCK 1.1: TRILOGY OF MASTERY
               ---------------------------------------------------- */}
           <div className="flex justify-center">
-
-
-            {/* Right Column: Warm Orange/Butter Box with 3 Certificates */}
             <div className="max-w-3xl w-full mx-auto">
               <div className="bg-[#F7ECD4]/85 rounded-3xl p-5 sm:p-7 border border-[#EFE2C6] shadow-xs space-y-4">
                 <Reveal direction="left">
@@ -189,7 +224,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         </span>
                       </div>
                       <h3 className="text-lg sm:text-xl font-serif-thai font-bold text-[#4A3F35]">
-                        3 พื้นฐานสำคัญ (อาหารไทย • เค้ก • ขนมปัง)
+                        {isEn ? "3 Core Disciplines (Thai Culinary • Cake • Artisan Bread)" : "3 พื้นฐานสำคัญ (อาหารไทย • เค้ก • ขนมปัง)"}
                       </h3>
                     </div>
 
@@ -202,7 +237,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           )
                         }
                         className="w-8 h-8 rounded-full bg-white hover:bg-[#EFE2C6] text-[#4A3F35] border border-[#EFE2C6] flex items-center justify-center transition shadow-2xs cursor-pointer"
-                        title="ใบก่อนหน้า"
+                        title={isEn ? "Previous Certificate" : "ใบก่อนหน้า"}
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
@@ -216,14 +251,14 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           )
                         }
                         className="w-8 h-8 rounded-full bg-white hover:bg-[#EFE2C6] text-[#4A3F35] border border-[#EFE2C6] flex items-center justify-center transition shadow-2xs cursor-pointer"
-                        title="ใบถัดไป"
+                        title={isEn ? "Next Certificate" : "ใบถัดไป"}
                       >
                         <ChevronRight className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
 
-                  {/* 3 Tabs Pill Bar (Always clearly shows all 3 certificates) */}
+                  {/* 3 Tabs Pill Bar */}
                   <div className="flex flex-wrap gap-2">
                     {certificates.map((cert, idx) => (
                       <button
@@ -243,7 +278,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     ))}
                   </div>
 
-                  {/* Desktop: Horizontal Fanned-out Accordion Spread (พัดคลี่แบบกึ่งซ้อน) */}
+                  {/* Desktop: Horizontal Fanned-out Accordion Spread */}
                   <div className="hidden sm:flex gap-3 h-[260px] pt-1">
                     {certificates.map((cert, idx) => {
                       const isActive = activeCert === idx;
@@ -258,7 +293,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           }`}
                         >
                           {isActive ? (
-                            /* Expanded Active Certificate Card */
                             <>
                               <div
                                 onClick={(e) => {
@@ -275,7 +309,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                                 <div className="absolute inset-0 bg-[#4A3F35]/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                   <span className="px-2 py-0.5 rounded-full bg-white/95 text-[10px] font-semibold text-[#4A3F35] shadow-xs flex items-center gap-1">
                                     <Maximize2 className="w-3 h-3 text-[#9B1D30]" />{" "}
-                                    ดูภาพเต็ม
+                                    {isEn ? "View Full" : "ดูภาพเต็ม"}
                                   </span>
                                 </div>
                               </div>
@@ -316,13 +350,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                                     className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9B1D30] hover:text-[#B0303C] cursor-pointer"
                                   >
                                     <Maximize2 className="w-3 h-3" />
-                                    <span>คลิกดูใบประกาศขยายเต็มจอ</span>
+                                    <span>{isEn ? "Click to view full certificate" : "คลิกดูใบประกาศขยายเต็มจอ"}</span>
                                   </button>
                                 </div>
                               </div>
                             </>
                           ) : (
-                            /* Collapsed Peeking Card (Fanned Side Tab) */
                             <>
                               <div className="space-y-1">
                                 <span className="font-serif text-xl font-light text-[#9B1D30]/50 block">
@@ -333,7 +366,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                                 </span>
                               </div>
 
-                              {/* Peeking Mini Certificate Thumbnail */}
                               <div className="w-full aspect-[4/3] rounded-lg overflow-hidden border border-[#EFE2C6]/60 bg-[#F7ECD4] p-1 shadow-2xs">
                                 <img
                                   src={cert.image}
@@ -343,7 +375,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                               </div>
 
                               <span className="text-[10px] text-[#9B1D30] font-medium bg-[#F7ECD4] px-2 py-0.5 rounded-full border border-[#EFE2C6]">
-                                คลิกเพื่อดู ↗
+                                {isEn ? "View ↗" : "คลิกเพื่อดู ↗"}
                               </span>
                             </>
                           )}
@@ -352,7 +384,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     })}
                   </div>
 
-                  {/* Mobile Steppable Card (sm:hidden) */}
+                  {/* Mobile Steppable Card */}
                   <div className="sm:hidden bg-[#FFF5E1] rounded-2xl border border-[#EFE2C6] p-4 space-y-3">
                     <div className="flex gap-3 items-center">
                       <div
@@ -389,7 +421,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                       className="w-full py-1.5 rounded-full bg-[#F7ECD4] text-[#9B1D30] border border-[#EFE2C6] text-[11px] font-semibold flex items-center justify-center gap-1 cursor-pointer"
                     >
                       <Maximize2 className="w-3 h-3" />
-                      <span>ขยายดูใบประกาศเต็ม</span>
+                      <span>{isEn ? "Enlarge Certificate View" : "ขยายดูใบประกาศเต็ม"}</span>
                     </button>
                   </div>
                 </Reveal>
@@ -399,19 +431,18 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
           {/* ----------------------------------------------------
               BLOCK 1.2: AWARD-WINNING & WORLD BROADCAST
-              เวทีปรุงสุข & NHK Bento Expo
               ---------------------------------------------------- */}
           <div className="pt-8">
             <Reveal>
               <div className="text-center mb-10">
-                <span className="stamp-badge">Award & Global Spotlight</span>
+                <span className="stamp-badge">Award &amp; Global Spotlight</span>
                 <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] mt-2">
-                  เวทีการแข่งขัน และเรื่องราวที่ไปไกลระดับสากล
+                  {isEn ? "Culinary Competition & International Spotlight" : "เวทีการแข่งขัน และเรื่องราวที่ไปไกลระดับสากล"}
                 </h3>
               </div>
             </Reveal>
 
-            {/* 2-Column Open Magazine Editorial separated by dashed line */}
+            {/* 2-Column Open Magazine Editorial */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 md:divide-x md:divide-dashed md:divide-[#4A3F35]/20">
               {/* Left Column: เวทีปรุงสุข (Top 30 & Cookbook Selected) */}
               <div className="space-y-6">
@@ -420,14 +451,16 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="stamp-box">เวทีปรุงสุข 2024</span>
+                          <span className="stamp-box">{isEn ? "Prungsuk Contest 2024" : "เวทีปรุงสุข 2024"}</span>
                           <span className="text-xs font-semibold text-[#9B1D30]">
                             Top 30 Finalist
                           </span>
                         </div>
 
                         <h4 className="text-lg sm:text-xl font-serif-thai font-bold text-[#4A3F35] leading-snug mt-2">
-                          เดอะ คาสซ่า ริบอาย — ยกระดับวัตถุดิบท้องถิ่นสู่เมนูสุขภาพใน Cookbook ระดับประเทศ
+                          {isEn
+                            ? "The Cassava Ribeye — Elevating local ingredients into a healthy national cookbook entry"
+                            : "เดอะ คาสซ่า ริบอาย — ยกระดับวัตถุดิบท้องถิ่นสู่เมนูสุขภาพใน Cookbook ระดับประเทศ"}
                         </h4>
                       </div>
 
@@ -439,7 +472,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           )
                         }
                         className="relative shrink-0 cursor-pointer group"
-                        title="คลิกดูภาพวาดสีน้ำเมนูปรุงสุขขยายใหญ่"
+                        title={isEn ? "Click to enlarge watercolor dish illustration" : "คลิกดูภาพวาดสีน้ำเมนูปรุงสุขขยายใหญ่"}
                       >
                         <span className="absolute -top-2 -right-1 text-[#9B1D30] text-sm animate-twinkle pointer-events-none">
                           ✨
@@ -449,17 +482,19 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         </span>
                         <img
                           src="/images/hybrid/prungsuk_watercolor.png"
-                          alt="ภาพวาดสีน้ำจานเมนูปรุงสุข เดอะ คาสซ่า ริบอาย"
+                          alt={isEn ? "The Cassava Ribeye Prungsuk dish illustration" : "ภาพวาดสีน้ำจานเมนูปรุงสุข เดอะ คาสซ่า ริบอาย"}
                           className="w-20 sm:w-24 md:w-28 lg:w-32 h-auto drop-shadow-md animate-gentle-tilt group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                     </div>
 
                     <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                      พิสูจน์ทักษะการปรับสูตรให้ "ดีต่อสุขภาพขึ้นแต่ยังอร่อย" บนเวทีการแข่งขันปรุงสุข ด้วยการนำแป้งมันสำปะหลังไร้กลูเตนมาทำเบเกิลคู่กับเนื้อริบอายโพนยางคำและมูสกระเทียมดำ จนเข้ารอบ 30 ทีมสุดท้ายและได้รับคัดเลือกตีพิมพ์ลงหนังสือ Prungsuk Selected Cookbook
+                      {isEn
+                        ? "Proved culinary agility in making dishes 'healthier yet deeply delicious' at the national Prungsuk competition—crafting gluten-free cassava bagels paired with Pon Yang Kham ribeye and black garlic mousse, achieving Top 30 Finalist status and publication in the official Prungsuk Selected Cookbook."
+                        : "พิสูจน์ทักษะการปรับสูตรให้ \"ดีต่อสุขภาพขึ้นแต่ยังอร่อย\" บนเวทีการแข่งขันปรุงสุข ด้วยการนำแป้งมันสำปะหลังไร้กลูเตนมาทำเบเกิลคู่กับเนื้อริบอายโพนยางคำและมูสกระเทียมดำ จนเข้ารอบ 30 ทีมสุดท้ายและได้รับคัดเลือกตีพิมพ์ลงหนังสือ Prungsuk Selected Cookbook"}
                     </p>
 
-                    {/* Scrapbook Visual Cluster: Team photo + Dish + Cookbook Cover */}
+                    {/* Scrapbook Visual Cluster */}
                     <div className="relative pt-4 pb-2">
                       <div className="grid grid-cols-12 gap-3 items-center">
                         {/* Team Photo */}
@@ -469,15 +504,14 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           }
                           className="col-span-6 rounded-2xl overflow-hidden border border-[#EFE2C6] shadow-2xs bg-[#F7ECD4] cursor-pointer group transform -rotate-1 hover:rotate-0 transition-transform duration-300 relative"
                         >
-                          {/* Washi Tape */}
                           <div className="absolute top-1 left-3 w-16 h-4 bg-[#9B1D30]/30 -rotate-2 rounded-xs pointer-events-none z-10"></div>
                           <img
                             src="/images/hybrid/prungsuk_team.jpg"
-                            alt="บรรยากาศการแข่งขันเวทีปรุงสุข"
+                            alt={isEn ? "Prungsuk Final Round Competition Atmosphere" : "บรรยากาศการแข่งขันเวทีปรุงสุข"}
                             className="w-full h-32 sm:h-36 object-cover group-hover:scale-105 transition-transform"
                           />
                           <div className="p-1.5 text-center bg-[#FFF5E1] text-[10px] text-[#786E64]">
-                            บรรยากาศแข่งขันรอบชิง
+                            {isEn ? "Final Round Atmosphere" : "บรรยากาศแข่งขันรอบชิง"}
                           </div>
                         </div>
 
@@ -490,16 +524,16 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         >
                           <img
                             src="/images/hybrid/prungsuk_dish.jpg"
-                            alt="จานเมนู เดอะ คาสซ่า ริบอาย ในเล่ม Cookbook"
+                            alt={isEn ? "The Cassava Ribeye dish in official cookbook" : "จานเมนู เดอะ คาสซ่า ริบอาย ในเล่ม Cookbook"}
                             className="w-full h-32 sm:h-36 object-cover group-hover:scale-105 transition-transform"
                           />
                           <div className="p-1.5 text-center bg-[#FFF5E1] text-[10px] text-[#786E64]">
-                            หน้าสูตรอาหารในเล่มจริง
+                            {isEn ? "Cookbook Recipe Feature" : "หน้าสูตรอาหารในเล่มจริง"}
                           </div>
                         </div>
                       </div>
 
-                      {/* Small Cookbook Cover Badge Floating Overlay */}
+                      {/* Small Cookbook Cover Badge */}
                       <div
                         onClick={() =>
                           setLightboxImg("/images/hybrid/prungsuk_cookbook.jpg")
@@ -508,7 +542,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                       >
                         <img
                           src="/images/hybrid/prungsuk_cookbook.jpg"
-                          alt="หน้าปก Prungsuk Selected Cookbook"
+                          alt="Prungsuk Selected Cookbook Cover"
                           className="w-10 h-13 object-cover rounded-md shadow-2xs"
                         />
                         <div className="text-left space-y-0.5">
@@ -516,7 +550,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                             Prungsuk Selected Cookbook
                           </span>
                           <span className="text-[10px] text-[#786E64] block">
-                            บันทึกสูตรและคุณค่าทางโภชนาการอย่างเป็นทางการ
+                            {isEn
+                              ? "Official publication documenting recipes & nutritional analysis"
+                              : "บันทึกสูตรและคุณค่าทางโภชนาการอย่างเป็นทางการ"}
                           </span>
                         </div>
                       </div>
@@ -530,7 +566,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         rel="noopener noreferrer"
                         className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F7ECD4] hover:bg-[#EFE2C6] text-[#9B1D30] border border-[#9B1D30]/40 text-xs font-semibold shadow-2xs hover:shadow-xs transition-all duration-300"
                       >
-                        <span>เปิดดูสูตรอาหารใน Cookbook ออนไลน์</span>
+                        <span>{isEn ? "Read Recipe in Online Cookbook" : "เปิดดูสูตรอาหารใน Cookbook ออนไลน์"}</span>
                         <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </a>
                     </div>
@@ -554,7 +590,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         </div>
 
                         <h4 className="text-lg sm:text-xl font-serif-thai font-bold text-[#4A3F35] leading-snug mt-2">
-                          รายการ Bento Expo ประเทศญี่ปุ่น — ส่งต่อความอบอุ่นของครอบครัวผ่านมื้ออาหาร
+                          {isEn
+                            ? "NHK World-Japan Bento Expo — Sharing family warmth through home-cooked bento"
+                            : "รายการ Bento Expo ประเทศญี่ปุ่น — ส่งต่อความอบอุ่นของครอบครัวผ่านมื้ออาหาร"}
                         </h4>
                       </div>
 
@@ -566,7 +604,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           )
                         }
                         className="relative shrink-0 cursor-pointer group"
-                        title="คลิกดูภาพวาดสีน้ำขยายใหญ่"
+                        title={isEn ? "Click to enlarge watercolor illustration" : "คลิกดูภาพวาดสีน้ำขยายใหญ่"}
                       >
                         <span className="absolute -top-1.5 -right-1 text-[#9B1D30] text-xs animate-twinkle pointer-events-none">
                           ✨
@@ -576,14 +614,16 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         </span>
                         <img
                           src="/images/hybrid/nhk_bento_watercolor.png"
-                          alt="ภาพวาดสีน้ำข้าวกล่องเบนโตะ Bento Box"
+                          alt={isEn ? "Watercolor illustration of Bento Box" : "ภาพวาดสีน้ำข้าวกล่องเบนโตะ Bento Box"}
                           className="w-20 sm:w-24 md:w-28 lg:w-32 h-auto drop-shadow-md animate-gentle-tilt-reverse group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                     </div>
 
                     <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                      ผลงานข้าวกล่องเบนโตะ "Smily Bento for an Adopted Daughter" ที่ได้รับคัดเลือกให้ออกอากาศทางช่อง NHK World Japan สะท้อนตัวตนของฉันที่เชื่อเสมอว่า "อาหารคือภาษาของความรักและความอบอุ่นในครอบครัว"
+                      {isEn
+                        ? "Featured on NHK World-Japan's Bento Expo with 'Smily Bento for an Adopted Daughter'—reflecting my core belief that 'food is the universal language of love and warmth in every family.'"
+                        : "ผลงานข้าวกล่องเบนโตะ \"Smily Bento for an Adopted Daughter\" ที่ได้รับคัดเลือกให้ออกอากาศทางช่อง NHK World Japan สะท้อนตัวตนของฉันที่เชื่อเสมอว่า \"อาหารคือภาษาของความรักและความอบอุ่นในครอบครัว\""}
                     </p>
 
                     {/* Visual: Broadcast Screen + Bento Close-up */}
@@ -593,7 +633,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         onClick={() => setIsVideoModalOpen(true)}
                         className="rounded-2xl overflow-hidden border border-[#EFE2C6] shadow-sm bg-[#FFF5E1] cursor-pointer group relative"
                       >
-                        {/* Japanese Stamp Badge on Top Right */}
                         <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-[#9B1D30]/90 text-white text-[10px] font-bold tracking-wider uppercase border border-white/40 shadow-xs flex items-center gap-1">
                           <Tv className="w-3 h-3" /> NHK World Broadcast
                         </div>
@@ -604,7 +643,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                             alt="NHK World Bento Expo - Rin Thailand"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
-                          {/* Play overlay icon */}
                           <div className="absolute inset-0 bg-[#4A3F35]/25 flex items-center justify-center group-hover:bg-[#4A3F35]/35 transition-colors">
                             <div className="w-12 h-12 rounded-full bg-white/95 text-[#9B1D30] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                               <Play className="w-5 h-5 fill-current ml-0.5" />
@@ -614,10 +652,10 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
                         <div className="p-2.5 bg-[#F7ECD4] text-center text-xs text-[#4A3F35] font-medium flex items-center justify-between px-4">
                           <span>
-                            รายการ NHK World: Bento Posts (Rin, Thailand)
+                            {isEn ? "NHK World: Bento Posts (Rin, Thailand)" : "รายการ NHK World: Bento Posts (Rin, Thailand)"}
                           </span>
                           <span className="text-[11px] text-[#9B1D30] font-semibold flex items-center gap-1">
-                            ดูคลิป <ArrowRight className="w-3 h-3" />
+                            {isEn ? "Watch Video" : "ดูคลิป"} <ArrowRight className="w-3 h-3" />
                           </span>
                         </div>
                       </div>
@@ -631,16 +669,17 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                       >
                         <img
                           src="/images/hybrid/nhk_bento_closeup.jpg"
-                          alt="ภาพเบนโตะชัดๆ Smily Bento"
+                          alt="Smily Bento Close-up"
                           className="w-14 h-14 object-cover rounded-xl shrink-0"
                         />
                         <div className="text-left space-y-0.5">
                           <span className="text-xs font-bold text-[#4A3F35] block font-serif-thai">
-                            Smily Bento Set (รายละเอียดองค์ประกอบจาน)
+                            {isEn ? "Smily Bento Set (Dish Breakdown)" : "Smily Bento Set (รายละเอียดองค์ประกอบจาน)"}
                           </span>
                           <span className="text-[11px] text-[#786E64] block">
-                            ปลาแซลมอนสด, ข้าวรอยยิ้ม, ไก่คาราอาเกะ
-                            และผลไม้สดคู่ซอส
+                            {isEn
+                              ? "Fresh salmon, smiley rice, chicken karaage, and fresh fruit"
+                              : "ปลาแซลมอนสด, ข้าวรอยยิ้ม, ไก่คาราอาเกะ และผลไม้สดคู่ซอส"}
                           </span>
                         </div>
                         <Maximize2 className="w-4 h-4 text-[#786E64] ml-auto shrink-0" />
@@ -654,7 +693,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white text-xs font-semibold shadow-xs hover:shadow-sm transition-all duration-300 cursor-pointer"
                       >
                         <Play className="w-3.5 h-3.5 fill-current" />
-                        <span>ชมคลิปออกอากาศย้อนหลัง (คลิกดูวิดีโอ) ↗</span>
+                        <span>{isEn ? "Watch International Broadcast Clip ↗" : "ชมคลิปออกอากาศย้อนหลัง (คลิกดูวิดีโอ) ↗"}</span>
                       </button>
                     </div>
                   </div>
@@ -665,11 +704,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
           {/* ----------------------------------------------------
               SPECIAL SWEET MEMORY CARD: ทับทิมกรอบนอกสถานที่ (Catering)
-              การ์ดโน้ตสีเหลืองเนยอ่อน แปะแทรกไว้ในสมุดสูตรอาหาร (Scrapbook)
               ---------------------------------------------------- */}
           <Reveal delay={250}>
             <div className="mt-12 bg-[#F7ECD4]/90 rounded-3xl border border-[#EFE2C6] p-5 sm:p-7 shadow-xs relative">
-              {/* Scrapbook Washi Tape on top edge - Fully Visible */}
               <div className="absolute -top-3 left-8 sm:left-12 w-28 sm:w-32 h-6 bg-[#9B1D30]/35 rotate-1 rounded-xs pointer-events-none backdrop-blur-xs border-y border-dashed border-[#9B1D30]/40 shadow-2xs z-10"></div>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
@@ -684,7 +721,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                       </div>
 
                       <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] leading-snug">
-                        Sweet Memory: บทพิสูจน์รสมือหน้างานจริงกับ "ทับทิมกรอบ" นอกสถานที่
+                        {isEn
+                          ? "Sweet Memory: Real-world catering proof with on-site 'Tub Tim Krob' (Ruby Water Chestnuts)"
+                          : "Sweet Memory: บทพิสูจน์รสมือหน้างานจริงกับ \"ทับทิมกรอบ\" นอกสถานที่"}
                       </h3>
                     </div>
 
@@ -694,7 +733,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         setLightboxImg("/images/hybrid/tubtim_watercolor.png")
                       }
                       className="relative shrink-0 cursor-pointer group"
-                      title="คลิกดูภาพวาดสีน้ำขยายใหญ่"
+                      title={isEn ? "Click to enlarge watercolor illustration" : "คลิกดูภาพวาดสีน้ำขยายใหญ่"}
                     >
                       <span className="absolute -top-1.5 -right-1 text-[#9B1D30] text-xs animate-twinkle pointer-events-none">
                         ✨
@@ -704,26 +743,28 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                       </span>
                       <img
                         src="/images/hybrid/tubtim_watercolor.png"
-                        alt="ภาพวาดสีน้ำทับทิมกรอบ"
+                        alt={isEn ? "Watercolor illustration of Tub Tim Krob" : "ภาพวาดสีน้ำทับทิมกรอบ"}
                         className="w-20 sm:w-24 md:w-28 lg:w-32 h-auto drop-shadow-md animate-gentle-tilt group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                    "เพราะเพื่อนและรุ่นพี่ในคลาสเชฟเชื่อมั่นในรสมือการทำขนมของฉัน จึงชวนไปร่วมทีม Catering จัดเลี้ยงนอกสถานที่ เพื่อรับผิดชอบเมนูขนมหวานอย่าง 'ทับทิมกรอบ' โอกาสพิเศษครั้งนี้เปลี่ยนฉันจากคนทำอาหารในบ้าน สู่การรับมือกับงานครัวสเกลใหญ่—ที่ได้ฝึกทั้งการคำนวณปริมาณเสิร์ฟให้แม่นยำ การคุมคุณภาพกะทิและวัตถุดิบให้สดใหม่หน้างาน และการส่งมอบความสุขให้แขกจำนวนมากในเวลาจำกัด"
+                    {isEn
+                      ? "\"Because chef school classmates and seniors trusted my dessert craft, they invited me to join an off-site catering brigade in charge of traditional Thai dessert 'Tub Tim Krob' (Ruby Water Chestnuts). This milestone shifted me from home-kitchen cooking to high-volume culinary execution—honing portion estimation, on-site coconut milk freshness control, and delivering culinary joy to large crowds under strict timeframes.\""
+                      : "\"เพราะเพื่อนและรุ่นพี่ในคลาสเชฟเชื่อมั่นในรสมือการทำขนมของฉัน จึงชวนไปร่วมทีม Catering จัดเลี้ยงนอกสถานที่ เพื่อรับผิดชอบเมนูขนมหวานอย่าง 'ทับทิมกรอบ' โอกาสพิเศษครั้งนี้เปลี่ยนฉันจากคนทำอาหารในบ้าน สู่การรับมือกับงานครัวสเกลใหญ่—ที่ได้ฝึกทั้งการคำนวณปริมาณเสิร์ฟให้แม่นยำ การคุมคุณภาพกะทิและวัตถุดิบให้สดใหม่หน้างาน และการส่งมอบความสุขให้แขกจำนวนมากในเวลาจำกัด\""}
                   </p>
 
                   {/* Operational Capabilities Badges */}
                   <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs text-[#4A3F35]">
                     <div className="px-3 py-1.5 rounded-full bg-white/90 border border-[#EFE2C6] flex items-center gap-1.5 shadow-2xs font-medium">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#9B1D30]"></span>
-                      <span>Portion Calculation (คำนวณปริมาณเสิร์ฟแม่นยำ)</span>
+                      <span>{isEn ? "Portion Calculation (High-precision volume sizing)" : "Portion Calculation (คำนวณปริมาณเสิร์ฟแม่นยำ)"}</span>
                     </div>
                     <div className="px-3 py-1.5 rounded-full bg-white/90 border border-[#EFE2C6] flex items-center gap-1.5 shadow-2xs font-medium">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#8FA882]"></span>
                       <span>
-                        Real-time Ingredient Stocking (จัดการสต๊อกหน้างานสดใหม่)
+                        {isEn ? "Real-time Ingredient Stocking (On-site live freshness control)" : "Real-time Ingredient Stocking (จัดการสต๊อกหน้างานสดใหม่)"}
                       </span>
                     </div>
                   </div>
@@ -731,7 +772,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
                 {/* Right: Polaroid Visual Cluster */}
                 <div className="lg:col-span-5 flex flex-col sm:flex-row items-center justify-center gap-3">
-                  {/* Photo 1: Chef Rin at Catering line */}
                   <div
                     onClick={() =>
                       setLightboxImg("/images/hybrid/catering_rin_chef.jpg")
@@ -741,16 +781,15 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     <div className="aspect-[3/4] overflow-hidden rounded-xl bg-[#F7ECD4]">
                       <img
                         src="/images/hybrid/catering_rin_chef.jpg"
-                        alt="คุณรินหน้าไลน์อาหารจัดเลี้ยง Catering"
+                        alt="Catering line"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                     </div>
                     <p className="pt-1.5 pb-0.5 text-center text-[10px] font-serif-thai text-[#786E64] truncate">
-                      หน้าไลน์จัดเลี้ยง Catering
+                      {isEn ? "Live Catering Line" : "หน้าไลน์จัดเลี้ยง Catering"}
                     </p>
                   </div>
 
-                  {/* Photo 2: Tub Tim Krob Bowl */}
                   <div
                     onClick={() =>
                       setLightboxImg("/images/hybrid/catering_tubtim_bowl.jpg")
@@ -760,12 +799,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     <div className="aspect-[3/4] overflow-hidden rounded-xl bg-[#F7ECD4]">
                       <img
                         src="/images/hybrid/catering_tubtim_bowl.jpg"
-                        alt="ถ้วยขนมหวานทับทิมกรอบกะทิสด"
+                        alt="Tub Tim Krob Bowl"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                     </div>
                     <p className="pt-1.5 pb-0.5 text-center text-[10px] font-serif-thai text-[#786E64] truncate">
-                      ทับทิมกรอบกะทิสดหอมกรุ่น
+                      {isEn ? "Fragrant Fresh Tub Tim Krob" : "ทับทิมกรอบกะทิสดหอมกรุ่น"}
                     </p>
                   </div>
                 </div>
@@ -775,7 +814,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
               <div className="mt-4 pt-3 border-t border-[#4A3F35]/10 flex items-center justify-between flex-wrap gap-2 text-[11px] text-[#786E64]">
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-[#4A3F35]">
-                    ภาพวัตถุดิบจัดเลี้ยงสดใหม่:
+                    {isEn ? "Fresh Catering Ingredients:" : "ภาพวัตถุดิบจัดเลี้ยงสดใหม่:"}
                   </span>
                   <button
                     onClick={() =>
@@ -783,7 +822,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     }
                     className="inline-flex items-center gap-1 hover:text-[#9B1D30] transition cursor-pointer underline"
                   >
-                    ถาดทับทิมกรอบ ↗
+                    {isEn ? "Ruby Chestnuts Tray ↗" : "ถาดทับทิมกรอบ ↗"}
                   </button>
                   <span>•</span>
                   <button
@@ -794,12 +833,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     }
                     className="inline-flex items-center gap-1 hover:text-[#9B1D30] transition cursor-pointer underline"
                   >
-                    ถาดขนุนทองเชื่อม ↗
+                    {isEn ? "Sweet Jackfruit Tray ↗" : "ถาดขนุนทองเชื่อม ↗"}
                   </button>
                 </div>
 
                 <span className="text-[10px] text-[#9B1D30] font-medium flex items-center gap-1">
-                  คลิกที่รูปเพื่อขยายใหญ่ <Maximize2 className="w-3 h-3" />
+                  {isEn ? "Click image to enlarge" : "คลิกที่รูปเพื่อขยายใหญ่"} <Maximize2 className="w-3 h-3" />
                 </span>
               </div>
             </div>
@@ -808,10 +847,8 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
         {/* ========================================================
             SECTION 2: SOFTWARE DEVELOPER & FOOD BUSINESS ARCHITECTURE
-            จากหน้าเตาสู่สถาปัตยกรรมโค้ด
             ======================================================== */}
         <section className="space-y-10 pt-8 border-t border-[#4A3F35]/10">
-          {/* Handwritten connecting arrow note */}
           <Reveal>
             <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="font-serif text-3xl font-light text-[#8FA882]/70 block">
@@ -821,10 +858,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                 Part Two • Food Business Architecture
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif-thai font-bold text-[#4A3F35]">
-                เมื่อความเข้าใจในครัว... ถูกต่อยอดด้วยวิธีคิดแบบนักพัฒนาระบบ
+                {t.part2Title}
               </h2>
               <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                จากการเรียน Junior Software Developer และร่วมกับทีมพัฒนาโปรเจกต์เว็บไซต์ E-Commerce จำลองสำหรับขาย "ชุด Cooking Kit อาหารไทย 4 ภาค" ทำให้ฉันมองธุรกิจอาหารทะลุปรุโปร่งทั้งหน้าบ้านและหลังบ้าน ไม่ใช่แค่ทำให้อร่อย แต่ต้องจัดการสต๊อกและต้นทุนได้อย่างเป็นระบบ
+                {isEn
+                  ? "Completing Junior Software Developer training and collaborating on a simulated E-Commerce platform for '4-Region Thai Food Cooking Kits' gave me 360-degree clarity across front-of-house storefronts and back-of-house operations—proving food business requires not just delicious cooking, but structured inventory and cost management."
+                  : "จากการเรียน Junior Software Developer และร่วมกับทีมพัฒนาโปรเจกต์เว็บไซต์ E-Commerce จำลองสำหรับขาย \"ชุด Cooking Kit อาหารไทย 4 ภาค\" ทำให้ฉันมองธุรกิจอาหารทะลุปรุโปร่งทั้งหน้าบ้านและหลังบ้าน ไม่ใช่แค่ทำให้อร่อย แต่ต้องจัดการสต๊อกและต้นทุนได้อย่างเป็นระบบ"}
               </p>
             </div>
           </Reveal>
@@ -843,7 +882,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   }`}
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>หน้าร้านสำหรับลูกค้า (Customer View)</span>
+                  <span>{isEn ? "Customer Storefront (Customer View)" : "หน้าร้านสำหรับลูกค้า (Customer View)"}</span>
                 </button>
 
                 <button
@@ -855,7 +894,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   }`}
                 >
                   <Layers className="w-3.5 h-3.5" />
-                  <span>ระบบจัดการสต๊อกหลังบ้าน (Admin Stock System)</span>
+                  <span>{isEn ? "Backend Inventory System (Admin Stock System)" : "ระบบจัดการสต๊อกหลังบ้าน (Admin Stock System)"}</span>
                 </button>
               </div>
 
@@ -892,13 +931,13 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     >
                       <img
                         src="/images/hybrid/dev_customer_view.jpg"
-                        alt="ภาพแคปหน้าจอเว็บไซต์ฝั่งลูกค้า That-Tae"
+                        alt="Customer Storefront That-Tae"
                         className="w-full h-auto object-cover max-h-[500px]"
                       />
                       <div className="absolute inset-0 bg-[#4A3F35]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="px-3.5 py-1.5 rounded-full bg-white/95 text-xs font-semibold text-[#4A3F35] shadow-md flex items-center gap-1.5">
                           <Maximize2 className="w-3.5 h-3.5 text-[#9B1D30]" />{" "}
-                          คลิกดูรูปเต็ม
+                          {isEn ? "Click to view full image" : "คลิกดูรูปเต็ม"}
                         </span>
                       </div>
                     </div>
@@ -911,25 +950,29 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     >
                       <img
                         src="/images/hybrid/dev_admin_view.png"
-                        alt="ภาพแคปหน้าจอระบบหลังบ้าน คลังวัตถุดิบ 4 ภาค Admin"
+                        alt="Backend Admin Inventory System"
                         className="w-full h-auto object-cover max-h-[500px]"
                       />
                       <div className="absolute inset-0 bg-[#4A3F35]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="px-3.5 py-1.5 rounded-full bg-white/95 text-xs font-semibold text-[#4A3F35] shadow-md flex items-center gap-1.5">
                           <Maximize2 className="w-3.5 h-3.5 text-[#8FA882]" />{" "}
-                          คลิกดูรูปเต็ม
+                          {isEn ? "Click to view full image" : "คลิกดูรูปเต็ม"}
                         </span>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* Sweet Butter Recipe/Architecture Explanation Card (No Dark Box) */}
+                {/* Architecture Explanation Card */}
                 <div className="p-4 sm:p-5 rounded-2xl bg-[#F7ECD4] border border-[#EFE2C6] space-y-2 text-left">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-[#4A3F35] font-serif-thai flex items-center gap-1.5">
                       <Code className="w-4 h-4 text-[#9B1D30]" />
-                      <span>{"</> เข้าใจทั้งคนกิน (หน้าร้าน) และคนทำครัว (หลังบ้าน)"}</span>
+                      <span>
+                        {isEn
+                          ? "</> Bridging Customer Front-of-House with Kitchen Back-of-House Systems"
+                          : "</> เข้าใจทั้งคนกิน (หน้าร้าน) และคนทำครัว (หลังบ้าน)"}
+                      </span>
                     </span>
                     <span className="text-[10px] font-mono text-[#786E64] bg-white/80 px-2 py-0.5 rounded-full">
                       Next.js • Tailwind CSS • Vercel
@@ -937,7 +980,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   </div>
 
                   <p className="text-xs text-[#786E64] font-light leading-relaxed">
-                    ออกแบบประสบการณ์สั่งซื้อที่เข้าใจง่ายสำหรับลูกค้า พร้อมระบบหลังบ้านให้แอดมินจัดการการจัดส่ง เช็กสต๊อกสินค้า และตรวจสอบปริมาณวัตถุดิบที่ถูกใช้ไปแบบออนไลน์—ซึ่งเป็นแนวคิดเดียวกันกับที่ฉันจะนำมาใช้บริหารจัดการครัวและควบคุมต้นทุนใน Test Kitchen
+                    {isEn
+                      ? "Engineered an intuitive ordering experience for customers alongside a backend dashboard for order fulfillment, inventory tracking, and recipe ingredient depletion in real-time—the exact logic I apply to manage kitchen efficiency and cost control at the Test Kitchen."
+                      : "ออกแบบประสบการณ์สั่งซื้อที่เข้าใจง่ายสำหรับลูกค้า พร้อมระบบหลังบ้านให้แอดมินจัดการการจัดส่ง เช็กสต๊อกสินค้า และตรวจสอบปริมาณวัตถุดิบที่ถูกใช้ไปแบบออนไลน์—ซึ่งเป็นแนวคิดเดียวกันกับที่ฉันจะนำมาใช้บริหารจัดการครัวและควบคุมต้นทุนใน Test Kitchen"}
                   </p>
                 </div>
 
@@ -950,7 +995,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     className="group inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white text-xs sm:text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-300"
                   >
                     <Laptop className="w-4 h-4" />
-                    <span>ทดลองใช้งานเว็บไซต์ระบบจริง (Live Demo)</span>
+                    <span>{isEn ? "Experience Live Web App Demo (Live Demo)" : "ทดลองใช้งานเว็บไซต์ระบบจริง (Live Demo)"}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>
@@ -961,7 +1006,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
         {/* ========================================================
             SECTION 3: PROVEN CUSTOMER TRUST — THE RINGREDIENTS
-            คอมมูนิตี้และความไว้วางใจจากลูกค้าจริง
             ======================================================== */}
         <section className="space-y-10 pt-8 border-t border-[#4A3F35]/10">
           {/* Section Header */}
@@ -977,10 +1021,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   </span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-serif-thai font-bold text-[#4A3F35]">
-                  บันทึกการเดินทาง และความไว้วางใจจากคนกินจริง
+                  {t.part3Title}
                 </h2>
                 <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                  The Ringredients เริ่มต้นจากการเป็นไดอารี่บันทึกความสุขในการเรียนทำอาหาร แจกสูตรง่ายๆ ที่คิดเอง และรีวิวของอร่อยที่ชอบ จนเติบโตเป็นคอมมูนิตี้เล็กๆ ที่ผู้คนเชื่อมั่นในรสมือ เมื่อเปิดรับพรีออเดอร์เค้กและคุกกี้โฮมเมดในช่วงเทศกาลปีใหม่ จึงมียอดสั่งจองเต็มทุกรอบและลูกค้ากลับมาซื้อซ้ำอย่างต่อเนื่อง
+                  {isEn
+                    ? "The Ringredients began as a joyful personal diary sharing culinary experiments, original simple recipes, and foodie reviews—blossoming into an organic community deeply confident in my taste. When launching holiday pre-orders for artisan cakes and cookies, every batch sold out immediately with exceptional customer retention."
+                    : "The Ringredients เริ่มต้นจากการเป็นไดอารี่บันทึกความสุขในการเรียนทำอาหาร แจกสูตรง่ายๆ ที่คิดเอง และรีวิวของอร่อยที่ชอบ จนเติบโตเป็นคอมมูนิตี้เล็กๆ ที่ผู้คนเชื่อมั่นในรสมือ เมื่อเปิดรับพรีออเดอร์เค้กและคุกกี้โฮมเมดในช่วงเทศกาลปีใหม่ จึงมียอดสั่งจองเต็มทุกรอบและลูกค้ากลับมาซื้อซ้ำอย่างต่อเนื่อง"}
                 </p>
               </div>
 
@@ -991,7 +1037,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     setLightboxImg("/images/hybrid/trust_girl_watercolor.png")
                   }
                   className="relative group cursor-pointer"
-                  title="คลิกดูภาพวาดสีน้ำขยายใหญ่"
+                  title={isEn ? "Click to enlarge watercolor illustration" : "คลิกดูภาพวาดสีน้ำขยายใหญ่"}
                 >
                   <span className="absolute -top-2 -right-1 text-[#9B1D30] text-sm animate-twinkle pointer-events-none">
                     ✨
@@ -1001,7 +1047,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   </span>
                   <img
                     src="/images/hybrid/trust_girl_watercolor.png"
-                    alt="ภาพวาดสีน้ำความไว้วางใจจากลูกค้า The Ringredients"
+                    alt={isEn ? "Customer Trust Watercolor Illustration" : "ภาพวาดสีน้ำความไว้วางใจจากลูกค้า The Ringredients"}
                     className="w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40 h-auto drop-shadow-md animate-gentle-tilt group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
@@ -1011,11 +1057,10 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
           {/* Social Postcard Layout: IG Grid Showcase on Left, Reviews on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Left Column: IG Grid Showcase with Wabi-Sabi Tilt & Washi Tape */}
+            {/* Left Column: IG Grid Showcase */}
             <div className="lg:col-span-6 flex flex-col items-center">
               <Reveal direction="right">
                 <div className="w-full max-w-md bg-[#FFF5E1] rounded-3xl p-4 sm:p-5 border border-[#EFE2C6] shadow-sm transform -rotate-1 hover:rotate-0 transition-transform duration-500 relative">
-                  {/* Washi Tape in Matcha Green */}
                   <div className="absolute -top-3 left-10 w-24 h-6 bg-[#8FA882]/30 rotate-2 rounded-xs pointer-events-none"></div>
 
                   <div className="flex items-center justify-between pb-3 border-b border-[#4A3F35]/10 mb-3 px-1">
@@ -1028,7 +1073,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                           @the_ringredients
                         </span>
                         <span className="text-[10px] text-[#786E64] block">
-                          Food & Homemade Bakery
+                          Food &amp; Homemade Bakery
                         </span>
                       </div>
                     </div>
@@ -1050,14 +1095,15 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                     <div className="absolute inset-0 bg-[#4A3F35]/15 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="px-3 py-1 rounded-full bg-white/95 text-xs font-medium text-[#4A3F35] shadow-xs flex items-center gap-1.5">
                         <Maximize2 className="w-3.5 h-3.5 text-[#9B1D30]" />{" "}
-                        ขยายดูรูปฟีด
+                        {isEn ? "Enlarge Feed Photo" : "ขยายดูรูปฟีด"}
                       </span>
                     </div>
                   </div>
 
                   <p className="text-[11px] text-[#786E64] text-center pt-3 font-light">
-                    รวมภาพขนมเค้ก ขนมปัง
-                    และจานอาหารโฮมเมดที่ทำสดใหม่ส่งมอบให้ลูกค้า
+                    {isEn
+                      ? "Curated showcase of artisan cakes, bread, and homemade dishes delivered fresh to customers"
+                      : "รวมภาพขนมเค้ก ขนมปัง และจานอาหารโฮมเมดที่ทำสดใหม่ส่งมอบให้ลูกค้า"}
                   </p>
                 </div>
               </Reveal>
@@ -1067,7 +1113,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
             <div className="lg:col-span-6 space-y-5">
               <Reveal direction="left">
                 <div className="bg-[#F7ECD4] rounded-3xl border border-[#EFE2C6]/70 p-6 sm:p-8 space-y-6 shadow-2xs relative">
-                  {/* Quote decoration */}
                   <div className="flex items-center justify-between">
                     <div className="w-10 h-10 rounded-full bg-[#9B1D30]/15 text-[#9B1D30] flex items-center justify-center">
                       <Quote className="w-5 h-5 fill-current" />
@@ -1079,10 +1124,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
                   <div className="space-y-1">
                     <h3 className="text-xl font-serif-thai font-bold text-[#4A3F35]">
-                      เสียงตอบรับจริงจากผู้บริโภค
+                      {isEn ? "Authentic Consumer Testimonials" : "เสียงตอบรับจริงจากผู้บริโภค"}
                     </h3>
                     <p className="text-xs text-[#786E64] font-light leading-relaxed">
-                      รสชาติที่กลมกล่อม ไม่หวานเลี่ยน การคัดสรรวัตถุดิบอย่างดีที่สุด และความใส่ใจเหมือนทำให้คนในครอบครัวทาน คือเหตุผลที่ลูกค้ากว่า 85%+ กลับมาสั่งซ้ำ
+                      {isEn
+                        ? "Balanced, refined flavor without cloying sweetness, premium ingredient selection, and heartfelt care like cooking for family—this is why over 85%+ of customers return repeatedly."
+                        : "รสชาติที่กลมกล่อม ไม่หวานเลี่ยน การคัดสรรวัตถุดิบอย่างดีที่สุด และความใส่ใจเหมือนทำให้คนในครอบครัวทาน คือเหตุผลที่ลูกค้ากว่า 85%+ กลับมาสั่งซ้ำ"}
                     </p>
                   </div>
 
@@ -1095,7 +1142,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   >
                     <img
                       src="/images/hybrid/review_comment1.png"
-                      alt="รีวิวจากลูกค้า: แฟนเราชอบมากๆ บอกอร่อยมาก ไม่หวาน นุ่มละมุนสุดๆ"
+                      alt="Customer review 1"
                       className="w-full h-auto object-contain rounded-lg"
                     />
                   </div>
@@ -1109,7 +1156,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   >
                     <img
                       src="/images/hybrid/review_comment2.png"
-                      alt="รีวิวจากลูกค้า: ได้รับแล้วและกินแล้วค่ะ อร่อยยยย ตัวช็อกโกแลตเข้มข้นมากก"
+                      alt="Customer review 2"
                       className="w-full h-auto object-contain rounded-lg"
                     />
                   </div>
@@ -1118,10 +1165,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   <div className="pt-2 grid grid-cols-2 gap-3 text-center">
                     <div className="p-3 rounded-xl bg-white/80 border border-[#EFE2C6]/50 space-y-0.5">
                       <span className="text-lg font-bold font-serif-thai text-[#9B1D30] block">
-                        ยอดพรีออเดอร์เต็ม
+                        {isEn ? "100% Sold Out" : "ยอดพรีออเดอร์เต็ม"}
                       </span>
                       <span className="text-[10px] text-[#786E64] block">
-                        เค้ก ~20 กล่อง, คุกกี้ ~40 กล่อง/รอบปีใหม่
+                        {isEn
+                          ? "~20 Cake boxes, ~40 Cookie boxes / batch"
+                          : "เค้ก ~20 กล่อง, คุกกี้ ~40 กล่อง/รอบปีใหม่"}
                       </span>
                     </div>
 
@@ -1130,7 +1179,9 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                         85%+
                       </span>
                       <span className="text-[10px] text-[#786E64] block">
-                        อัตราการซื้อซ้ำจากลูกค้าเดิมต่อเนื่อง
+                        {isEn
+                          ? "Repeat purchase rate from community"
+                          : "อัตราการซื้อซ้ำจากลูกค้าเดิมต่อเนื่อง"}
                       </span>
                     </div>
                   </div>
@@ -1167,7 +1218,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
 
         {/* ========================================================
             BOTTOM NAVIGATION
-            Slender Minimal Buttons
             ======================================================== */}
         <Reveal>
           <div className="pt-8 border-t border-[#4A3F35]/10 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1176,13 +1226,13 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-white hover:bg-[#F7ECD4] text-[#4A3F35] border border-[#EFE2C6] text-xs font-medium transition shadow-2xs group cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 text-[#786E64] group-hover:-translate-x-0.5 transition-transform" />
-              <span>กลับสู่ Home</span>
+              <span>{isEn ? "Back to Home" : "กลับสู่ Home"}</span>
             </button>
             <button
               onClick={() => onNavigate("business")}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white text-xs font-medium transition shadow-sm hover:shadow-md group cursor-pointer"
             >
-              <span>ดู Business Concept & Model</span>
+              <span>{t.nextBtn}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -1190,12 +1240,11 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
       </div>
 
       {/* ========================================================
-          NHK WORLD BROADCAST VIDEO MODAL (พอกดแล้ววิดีโอเด้งขึ้นมา)
+          NHK WORLD BROADCAST VIDEO MODAL
           ======================================================== */}
       {isVideoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-[#FFF5E1] rounded-3xl border border-[#EFE2C6] shadow-2xl max-w-2xl w-full overflow-hidden space-y-4 p-5 sm:p-7 relative animate-in fade-in zoom-in-95 duration-200">
-            {/* Close Button */}
             <button
               onClick={() => setIsVideoModalOpen(false)}
               className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#F7ECD4] border border-[#EFE2C6] text-[#4A3F35] hover:bg-[#9B1D30] hover:text-white transition flex items-center justify-center cursor-pointer shadow-2xs"
@@ -1203,7 +1252,6 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Modal Header */}
             <div className="space-y-1 pr-10 text-left">
               <span className="stamp-badge !bg-[#9B1D30]/15">
                 NHK WORLD-JAPAN • Bento Expo
@@ -1212,12 +1260,12 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                 Smily Bento for an Adopted "Daughter" — Rin, Thailand
               </h3>
               <p className="text-xs text-[#786E64] font-light">
-                บันทึกภาพการออกอากาศในรายการ Bento Expo
-                โดยสถานีโทรทัศน์แห่งชาติญี่ปุ่น NHK
+                {isEn
+                  ? "Broadcast footage from NHK World-Japan's Bento Expo television program"
+                  : "บันทึกภาพการออกอากาศในรายการ Bento Expo โดยสถานีโทรทัศน์แห่งชาติญี่ปุ่น NHK"}
               </p>
             </div>
 
-            {/* Video / Visual Screen */}
             <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black relative border border-[#EFE2C6]">
               <video
                 controls
@@ -1226,11 +1274,10 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                 className="w-full h-full object-contain"
               >
                 <source src="/videos/nhk_bento_clip.mp4" type="video/mp4" />
-                เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ HTML5
+                {isEn ? "Your browser does not support HTML5 video playback." : "เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ HTML5"}
               </video>
             </div>
 
-            {/* Modal Footer */}
             <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2 text-[#786E64]">
                 <Tv className="w-4 h-4 text-[#9B1D30]" />
@@ -1244,13 +1291,13 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
                   className="px-4 py-2 rounded-full bg-white hover:bg-[#F7ECD4] text-[#9B1D30] border border-[#9B1D30]/40 font-medium transition flex items-center gap-1.5"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>เปิดดูในแท็บใหม่ ↗</span>
+                  <span>{isEn ? "Open in New Tab ↗" : "เปิดดูในแท็บใหม่ ↗"}</span>
                 </a>
                 <button
                   onClick={() => setIsVideoModalOpen(false)}
                   className="px-5 py-2 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white font-medium transition cursor-pointer"
                 >
-                  ปิดหน้าต่าง
+                  {isEn ? "Close" : "ปิดหน้าต่าง"}
                 </button>
               </div>
             </div>
@@ -1259,7 +1306,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
       )}
 
       {/* ========================================================
-          IMAGE LIGHTBOX MODAL (คลิกดูภาพขยายใหญ่ได้ทุกรูป)
+          IMAGE LIGHTBOX MODAL
           ======================================================== */}
       {lightboxImg && (
         <div
@@ -1278,7 +1325,7 @@ export default function HybridEdgePage({ onBack, onNavigate }) {
             </button>
             <img
               src={lightboxImg}
-              alt="ภาพขยาย"
+              alt={isEn ? "Enlarged View" : "ภาพขยาย"}
               className="max-h-[82vh] w-auto object-contain rounded-2xl"
             />
           </div>

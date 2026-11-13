@@ -1,118 +1,115 @@
-import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import { videoPitchScript } from '../data/portfolioData';
+import React, { useEffect, useRef } from "react";
+import { X, ExternalLink, Play, Film } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function PitchModal({ isOpen, onClose }) {
-  const [secondsLeft, setSecondsLeft] = useState(30);
-  const [isActive, setIsActive] = useState(false);
+  const { isEn } = useLanguage();
+  const videoRef = useRef(null);
 
+  // Close on ESC key
   useEffect(() => {
-    let interval = null;
-    if (isActive && secondsLeft > 0) {
-      interval = setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (secondsLeft === 0) {
-      setIsActive(false);
-      clearInterval(interval);
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
     }
-    return () => clearInterval(interval);
-  }, [isActive, secondsLeft]);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
-  const toggleTimer = () => {
-    if (secondsLeft === 0) {
-      setSecondsLeft(30);
-      setIsActive(true);
-    } else {
-      setIsActive(!isActive);
+  // Pause video if modal is closed
+  useEffect(() => {
+    if (!isOpen && videoRef.current) {
+      videoRef.current.pause();
     }
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    setSecondsLeft(30);
-  };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
-      <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-cream-200 shadow-2xl space-y-6 relative max-h-[90vh] overflow-y-auto">
-        
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-[10000] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 no-print animate-in fade-in duration-200"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-[#FFF5E1] rounded-3xl max-w-2xl w-full p-5 sm:p-7 border border-[#EFE2C6] shadow-2xl space-y-4 relative overflow-hidden animate-in zoom-in-95 duration-200"
+      >
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-cream-200 flex items-center justify-center text-charcoal hover:bg-burgundy hover:text-white transition"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#F7ECD4] border border-[#EFE2C6] text-[#4A3F35] hover:bg-[#9B1D30] hover:text-white transition flex items-center justify-center cursor-pointer shadow-2xs z-10"
+          aria-label="Close"
         >
-          <X className="w-4 h-4" />
+          <X className="w-5 h-5" />
         </button>
 
-        <div className="space-y-1">
-          <span className="font-handwriting text-xl text-terracotta">30-Second Video Pitch</span>
-          <h3 className="text-xl font-serif-thai font-bold text-burgundy">
-            สคริปต์วิดีโอแนะนำตัว 30 วินาที (ซ้อมพูดจริง)
+        {/* Modal Header */}
+        <div className="space-y-1 pr-10 text-left">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#9B1D30]/15 border border-[#9B1D30]/30 text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-[#9B1D30] uppercase">
+            <Film className="w-3 h-3 text-[#9B1D30]" />
+            <span>CHEFPRENEUR 2026 • VIDEO PITCH</span>
+          </div>
+          <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] leading-snug">
+            {isEn
+              ? "Candidate Introduction & Concept Pitch"
+              : "วิดีโอแนะนำตัวและนำเสนอคอนเซปต์"}
           </h3>
-          <p className="text-xs text-charcoal-light">
-            ตอบครบ 3 โจทย์ของ The Food School พร้อมตัวจับเวลาจำลอง
+          <p className="text-xs text-[#786E64] font-light">
+            {isEn
+              ? "Rin — Nidnipa Kiattikunnathum • The Food School Chefpreneur Competition"
+              : "ริน — นิษฐ์นิภา เกียรติคุณธรรม • โครงการ Chefpreneur 2026 The Food School"}
           </p>
         </div>
 
-        {/* Timer Rehearsal Widget */}
-        <div className="p-4 bg-burgundy-50 rounded-2xl border border-burgundy/20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-burgundy text-white flex items-center justify-center font-mono font-bold text-sm">
-              {secondsLeft}s
-            </div>
-            <div>
-              <span className="text-xs font-bold text-burgundy block">โหมดซ้อมพูดจับเวลา</span>
-              <span className="text-[11px] text-charcoal-light">
-                {secondsLeft === 0
-                  ? 'ครบ 30 วินาทีแล้ว!'
-                  : isActive
-                  ? 'กำลังซ้อมพูด...'
-                  : 'กดเริ่มเพื่อซ้อมพูดตามสคริปต์'}
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={toggleTimer}
-              className="px-3.5 py-1.5 rounded-full bg-burgundy text-white text-xs font-medium hover:bg-burgundy-800 transition"
-            >
-              {secondsLeft === 0 ? 'เริ่มใหม่' : isActive ? 'หยุด' : 'เริ่มจับเวลา'}
-            </button>
-            <button
-              onClick={resetTimer}
-              className="px-3 py-1.5 rounded-full bg-cream-200 text-charcoal text-xs hover:bg-cream-300 transition"
-            >
-              รีเซ็ต
-            </button>
-          </div>
-        </div>
-
-        {/* Script Steps */}
-        <div className="space-y-4 text-xs leading-relaxed">
-          {videoPitchScript.map((script) => (
-            <div key={script.step} className="p-3.5 rounded-xl bg-cream-50 border border-cream-200">
-              <div className="flex justify-between font-bold text-burgundy mb-1">
-                <span>{script.step}. {script.topic}</span>
-                <span className="font-mono text-terracotta">{script.time}</span>
-              </div>
-              <p className="text-charcoal italic">
-                "{script.speech}"
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="pt-2 text-center">
-          <button
-            onClick={onClose}
-            className="px-6 py-2.5 rounded-full bg-cream-200 text-charcoal text-xs font-medium hover:bg-cream-300 transition"
+        {/* Video Player */}
+        <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black relative border border-[#EFE2C6] shadow-inner">
+          <video
+            ref={videoRef}
+            controls
+            autoPlay
+            playsInline
+            preload="auto"
+            className="w-full h-full object-contain"
           >
-            ปิดหน้าต่าง
-          </button>
+            <source src="/videos/nidnipa_pitch.mp4" type="video/mp4" />
+            {isEn
+              ? "Your browser does not support HTML5 video playback."
+              : "เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ HTML5"}
+          </video>
         </div>
 
+        {/* Modal Footer */}
+        <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs border-t border-[#4A3F35]/10">
+          <div className="flex items-center gap-2 text-[#786E64]">
+            <Play className="w-3.5 h-3.5 text-[#9B1D30] fill-current" />
+            <span className="font-medium text-[11px] sm:text-xs">
+              {isEn
+                ? "30-Second Introduction Pitch"
+                : "วิดีโอแนะนำตัวความยาว 30 วินาที"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="/videos/nidnipa_pitch.mp4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-full bg-white hover:bg-[#F7ECD4] text-[#9B1D30] border border-[#9B1D30]/40 font-medium transition flex items-center gap-1.5 text-xs shadow-2xs cursor-pointer"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>{isEn ? "Open in New Tab ↗" : "เปิดดูในแท็บใหม่ ↗"}</span>
+            </a>
+            <button
+              onClick={onClose}
+              className="px-5 py-2 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white font-medium transition cursor-pointer text-xs shadow-xs"
+            >
+              {isEn ? "Close Window" : "ปิดหน้าต่าง"}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

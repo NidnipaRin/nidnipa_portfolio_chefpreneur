@@ -1,13 +1,17 @@
 import React from "react";
-import { ArrowRight, ArrowDown, Play, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowDown, Play, Sparkles, Download } from "lucide-react";
 import Reveal from "../components/Reveal";
 import {
   candidateInfo,
   signatureDishes,
   businessConceptData,
 } from "../data/portfolioData";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../data/translations";
 
-export default function HomeView({ onNavigate, onOpenPitch }) {
+export default function HomeView({ onNavigate, onOpenPitch, onOpenPrint }) {
+  const { lang, isEn } = useLanguage();
+  const t = translations[lang].home;
   const { hero, secondary, expansion } = signatureDishes;
 
   const scrollTo = (id) => {
@@ -38,43 +42,41 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
             <div className="space-y-5 sm:space-y-6 flex flex-col items-center">
               {/* Competition Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[11px] font-semibold tracking-widest text-[#9B1D30] border border-white/80 shadow-md uppercase">
-                <span>CHEFPRENEUR COMPETITION 2026 • THE FOOD SCHOOL</span>
+                <span>{t.badge}</span>
               </div>
 
               {/* English Headline (Serif อบอุ่น) */}
               <p className="font-serif italic text-2xl sm:text-3xl lg:text-4xl text-[#FFF5E1] font-medium tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
-                “From Mom’s Kitchen to a New Beginning”
+                {t.heroItalic}
               </p>
 
-              {/* Thai Main Headline (แบ่งเป็น 4 บรรทัด มีระยะห่างชัดเจน) */}
+              {/* Main Headline (แบ่งเป็น 4 บรรทัด มีระยะห่างชัดเจน) */}
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif-thai font-extrabold text-white leading-relaxed drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] max-w-4xl flex flex-col items-center gap-2 sm:gap-3 md:gap-4">
-                <span className="block">35 ปีที่ร้านระดับเปิบพิสดารปิดตัวลง...</span>
-                <span className="block">แต่รสมือแม่ไม่เคยหายไป</span>
-                <span className="block">สู่วันนี้ ที่ฉันตั้งใจนำความอบอุ่นนั้น</span>
-                <span className="block">มาทำใหม่ให้ "ดีกว่าเดิม"</span>
+                {t.heroLines.map((line, idx) => (
+                  <span key={idx} className="block">{line}</span>
+                ))}
               </h1>
 
               {/* Sub-headline (2 บรรทัดเล็ก) */}
               <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-                ไม่ได้กลับมาเพื่อเปิดร้านเก่าของอากง... แต่กลับมาเพื่อส่งต่อแกงกะหรี่จีนที่แม่ทำให้กินมาตลอด 35 ปี
-                <br className="hidden sm:inline" />
-                ในมาตรฐานใหม่ที่เบาสบายท้อง พิถีพิถัน และพร้อมเป็นมื้อที่อบอุ่นใจสำหรับทุกคน
+                {t.heroDesc}
               </p>
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-center gap-3.5 pt-4">
                 <button
-                  onClick={() => scrollTo("heritage")}
+                  onClick={onOpenPrint}
                   className="group inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
                 >
-                  <span>สำรวจสูตรแห่งความทรงจำ ➔</span>
+                  <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                  <span>{t.exploreHeritage}</span>
                 </button>
 
                 <button
                   onClick={onOpenPitch}
                   className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/40 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
                 >
-                  <span>ดูวิดีโอแนะนำตัว (30s) ▶</span>
+                  <span>{t.watchPitch}</span>
                 </button>
               </div>
             </div>
@@ -89,7 +91,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-white/90 shadow-2xs text-[#4A3F35] text-xs font-medium hover:bg-white transition">
             <div className="w-1.5 h-1.5 rounded-full bg-[#9B1D30] animate-ping"></div>
             <span className="text-[10px] tracking-wider uppercase font-sans text-[#786E64]">
-              Scroll to explore
+              {t.scrollToExplore}
             </span>
             <ArrowDown className="w-3 h-3 text-[#9B1D30] group-hover:translate-y-0.5 transition-transform" />
           </div>
@@ -108,11 +110,11 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
           <Reveal>
             <div className="text-center mb-16">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9B1D30] block mb-2">
-                1991 – 2026 · A WARM MEMORY, CRAFTED ANEW
+                {t.heritageTag}
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif-thai font-bold text-[#4A3F35] leading-normal sm:leading-relaxed lg:leading-[1.6]">
-                35 ปีหลังจากร้านในตำนานปิดตัวลง...
-                <br className="hidden sm:inline" /> ความอร่อยนั้นยังมีชีวิตอยู่ในครัวของแม่ และพร้อมก้าวสู่วันพรุ่งนี้ในแบบที่ "ดีกว่าเดิม"
+                {t.heritageHeadline1}
+                <br className="hidden sm:inline" /> {t.heritageHeadline2}
               </h2>
               <div className="flex items-center justify-center gap-3 text-[#9B1D30]/40 mt-3">
                 <span className="h-px w-10 bg-[#9B1D30]/20"></span>
@@ -153,18 +155,18 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
               <Reveal direction="left" delay={150}>
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <span className="stamp-badge">AUTHENTIC HERITAGE</span>
+                    <span className="stamp-badge">{t.heritageBadge}</span>
                     <span className="text-xs font-semibold text-[#9B1D30]">
-                      ความทรงจำที่มีชีวิต
+                      {t.heritageSub}
                     </span>
                   </div>
 
                   <p className="text-sm sm:text-base text-[#4A3F35] leading-relaxed">
-                    เมื่อปี พ.ศ. 2534 ร้าน &ldquo;ข้าวแกงจีนสวนกวางตุ้ง&rdquo; ตำนานความอร่อยระดับ &lsquo;เปิบพิสดาร&rsquo; ของอากงได้ปิดฉากลงในวันที่คุณแม่แต่งงาน... แต่ตลอด 35 ปีที่ผ่านมา กลิ่นหอมของแกงกะหรี่จีนหม้อนั้นไม่เคยเลือนหายไปจากบ้านเราเลย เพราะคุณแม่—ผู้ช่วยคนเก่งที่ยืนเคียงข้างอากงมาตลอด—ได้เปลี่ยนจากการทำขาย มาเป็นมื้ออาหารแสนอบอุ่นที่คอยปลอบประโลมและเติมพลังให้ฉันเสมอมา
+                    {t.heritageP1}
                   </p>
 
                   <p className="text-sm sm:text-base text-[#4A3F35] leading-relaxed">
-                    วันนี้ ฉันตัดสินใจนำเมนูนี้มาขึ้นเวที Chefpreneur ไม่ใช่เพื่อกลับมาเปิดร้านเดิม หรือใช้ชื่อร้านเดิมของอากง แต่เพราะฉันอยากส่งต่อ &ldquo;ความรู้สึกเหมือนได้กลับมากินข้าวบ้านแม่&rdquo; ให้กับคนยุคนี้ ภายใต้ ชื่อใหม่และบ้านหลังใหม่ ที่ตั้งใจทำทุกอย่างให้ดีขึ้นกว่าเดิม เราเก็บความหอมนัวและหัวใจความอบอุ่นของรสมือแม่ไว้ครบถ้วน แต่ปรับให้ทานง่ายสบายท้องขึ้น พิถีพิถันและแม่นยำในทุกจาน เพื่อให้มื้อที่อบอุ่นที่สุดตลอด 35 ปีของฉัน กลายเป็นมื้อที่ดีที่สุดสำหรับทุกคน
+                    {t.heritageP2}
                   </p>
 
                   {/* Bookmark-tail Style Link Button (หางตั๋วคั่นหนังสือสีน้ำตาลอ่อน) */}
@@ -173,7 +175,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                       onClick={() => onNavigate("heritage")}
                       className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F7ECD4] hover:bg-[#EFE2C6] text-[#4A3F35] border border-[#EFE2C6] text-xs sm:text-sm font-semibold shadow-2xs hover:shadow-xs transition-all duration-300 cursor-pointer"
                     >
-                      <span>อ่านบันทึกความทรงจำฉบับเต็ม</span>
+                      <span>{t.heritageBtn}</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
@@ -193,19 +195,19 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
           <Reveal>
             <div className="text-center mb-16">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9B1D30] block mb-2">
-                OUR STRENGTH
+                {t.skillsTag}
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif-thai font-bold text-[#4A3F35] leading-normal sm:leading-relaxed lg:leading-[1.6]">
                 <span className="inline-block">
-                  3 ทักษะที่หลอมรวม... เพื่อทำรสมือแม่ให้ "ดีกว่าเดิม"
+                  {t.skillsHeadline}
                 </span>
                 <br />
                 <span className="inline-block font-serif">
-                  My Hybrid Skills
+                  {t.skillsSub}
                 </span>
               </h2>
               <p className="text-xs sm:text-sm text-[#786E64] font-light mt-3 max-w-2xl mx-auto leading-relaxed">
-                เพราะการสร้างแบรนด์ใหม่ให้แข็งแรง ต้องใช้มากกว่าแค่ความรักในการทำอาหาร ฉันจึงนำทักษะหน้าเตา วิธีคิดเชิงระบบ และหัวใจที่เข้าใจคนกิน มาผสานเข้าด้วยกัน
+                {t.skillsDesc}
               </p>
             </div>
           </Reveal>
@@ -223,22 +225,22 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
                     <img
                       src="/images/home/pillar_culinary.png"
-                      alt="Certified Culinary & Standard"
+                      alt={t.culinaryTitle}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-md"
                     />
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#9B1D30] transition-colors">
-                    Certified Culinary & Standard
+                    {t.culinaryTitle}
                   </h3>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed max-w-xs">
-                    ผ่านการอบรมเชฟอาหารไทย (OFOS) พร้อมพื้นฐานความเป๊ะจากศาสตร์เบเกอรี่และขนมปัง การันตีความคิดสร้างสรรค์ด้วยรางวัล Top 30 เวทีปรุงสุข 2024 และผลงานออกอากาศรายการ Bento Expo ช่อง NHK World-Japan
+                    {t.culinaryDesc}
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#4A3F35]/10 w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-[#9B1D30]">
-                  <span>ศาสตร์ครัวและความแม่นยำ</span>
+                  <span>{t.culinaryFoot}</span>
                   <span className="group-hover:translate-x-1 transition-transform">
                     ➔
                   </span>
@@ -257,22 +259,22 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
                     <img
                       src="/images/home/pillar_software.png"
-                      alt="System & E-Commerce Thinking"
+                      alt={t.techTitle}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-md"
                     />
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#738C66] transition-colors">
-                    System & E-Commerce Thinking
+                    {t.techTitle}
                   </h3>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed max-w-xs">
-                    นำทักษะจากการเรียน Junior Software Developer มาใช้วางระบบธุรกิจอาหาร เคยร่วมพัฒนาเว็บจำลองขายชุด Cooking Kit อาหารไทย 4 ภาค ที่เชื่อมโยงตั้งแต่หน้าร้านออนไลน์ ไปจนถึงระบบตัดสต๊อกวัตถุดิบหลังบ้านเพื่อลด Food Waste
+                    {t.techDesc}
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#4A3F35]/10 w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-[#738C66]">
-                  <span>วิธีคิดเชิงระบบ & หลังบ้าน</span>
+                  <span>{t.techFoot}</span>
                   <span className="group-hover:translate-x-1 transition-transform">
                     ➔
                   </span>
@@ -291,22 +293,22 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
                     <img
                       src="/images/home/pillar_customer_trust.png"
-                      alt="Proven Customer Trust"
+                      alt={t.trustTitle}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-md"
                     />
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#9B1D30] transition-colors">
-                    Proven Customer Trust
+                    {t.trustTitle}
                   </h3>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed max-w-xs">
-                    พิสูจน์รสมือจริงผ่านเพจ The Ringredients พื้นที่เล่าเรื่องอาหารและเปิดรับพรีออเดอร์โฮมเมดเบเกอรี่ที่มียอดสั่งจองเต็มทุกรอบ พร้อมอัตราการกลับมาซื้อซ้ำกว่า 85%+ จากความใส่ใจในทุกคำที่เสิร์ฟ
+                    {t.trustDesc}
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#4A3F35]/10 w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-[#9B1D30]">
-                  <span>คอมมูนิตี้และความผูกพัน</span>
+                  <span>{t.trustFoot}</span>
                   <span className="group-hover:translate-x-1 transition-transform">
                     ➔
                   </span>
@@ -322,7 +324,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 onClick={() => onNavigate("hybrid")}
                 className="group inline-flex items-center gap-2 px-7 py-2.5 rounded-full border border-[#9B1D30] text-[#9B1D30] hover:bg-[#9B1D30] hover:text-white text-xs font-semibold transition-all duration-300 shadow-2xs hover:shadow-xs cursor-pointer"
               >
-                <span>สำรวจทักษะไฮบริดทั้งหมด</span>
+                <span>{t.skillsBtn}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -339,13 +341,13 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
           <Reveal>
             <div className="text-center mb-16">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9B1D30] block mb-2">
-                SIGNATURE DISH & MENU CONCEPT
+                {t.menuTag}
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif-thai font-bold text-[#4A3F35] leading-normal sm:leading-relaxed lg:leading-[1.6]">
-                หัวใจหลักของมื้ออาหาร... จากชามเด่นหน้าเตา สู่ความอบอุ่นที่ส่งตรงถึงบ้าน
+                {t.menuHeadline}
               </h2>
               <p className="text-xs sm:text-sm text-[#786E64] font-light mt-3 max-w-2xl mx-auto leading-relaxed">
-                เริ่มต้นจากเมนูพระเอกที่ฉันตั้งใจนำมาพิสูจน์ฝีมือบนเวทีการแข่งขัน เคียงข้างด้วยเมนูโฮมเมดรสมือแม่ และต่อยอดสู่ผลิตภัณฑ์ที่ส่งต่อความอร่อยไปได้ทุกที่
+                {t.menuDesc}
               </p>
             </div>
           </Reveal>
@@ -361,7 +363,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 <div className="lg:col-span-6 relative aspect-[4/3] overflow-hidden bg-[#F7ECD4]">
                   <img
                     src="/images/home/dish_chinese_curry.jpg"
-                    alt="แกงกะหรี่จีนรสมือแม่ (สูตรต้นตำรับปรับสมดุลใหม่)"
+                    alt={t.heroDishTitle}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
 
@@ -371,19 +373,19 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                       Signature
                     </span>
                     <span className="text-[10px] font-serif-thai font-bold leading-tight">
-                      สูตรลับของครอบครัว
+                      {isEn ? "Family Recipe" : "สูตรลับของครอบครัว"}
                     </span>
                   </div>
 
                   <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/60 text-white text-[11px] backdrop-blur-xs">
-                    ★ {hero.rating} ({hero.reviews})
+                    ★ {hero.rating} ({isEn ? t.heroDishReviews : hero.reviews})
                   </div>
                 </div>
 
                 {/* Right: Story & Details */}
                 <div className="lg:col-span-6 p-7 sm:p-9 lg:p-10 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="stamp-badge">COMPETITION HERO DISH</span>
+                    <span className="stamp-badge">{isEn ? "COMPETITION HERO DISH" : "COMPETITION HERO DISH"}</span>
                     <span className="text-xs font-semibold text-[#9B1D30] uppercase tracking-wider">
                       SIGNATURE CONCEPT
                     </span>
@@ -391,26 +393,30 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
 
                   <div>
                     <h3 className="text-2xl sm:text-3xl font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#9B1D30] transition-colors">
-                      แกงกะหรี่จีนรสมือแม่ (สูตรต้นตำรับปรับสมดุลใหม่)
+                      {t.heroDishTitle}
                     </h3>
                     <p className="text-xs sm:text-sm text-[#786E64] font-serif italic mt-0.5">
-                      Modernized Heritage Chinese Yellow Curry
+                      {t.heroDishEngTitle}
                     </p>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light leading-relaxed">
-                    แกงกะหรี่จีนแต้จิ๋วที่ใช้เครื่องเทศไทยผสานเทคนิคการผัดและเคี่ยวแบบอากง รสชาติเข้มข้น เผ็ด เค็ม มันนัว ไม่หวานเลี่ยน ปรับสมดุลใหม่ให้เนื้อแกงเนียนละมุน เบาสบายท้อง เสิร์ฟเคียงกุนเชียงทอด แตงกวากรอบ และพริกชี้ฟ้าสด
+                    {t.heroDishDesc}
                   </p>
 
                   <div className="p-3.5 bg-[#F7ECD4] rounded-2xl border border-[#EFE2C6]/70 text-xs text-[#4A3F35] leading-relaxed flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#9B1D30] shrink-0" />
-                    <span>รสชาติระดับ 'เปิบพิสดาร' ที่หาทานยากในปัจจุบัน ถอดรหัสจากรสมือแม่สู่สูตรมาตรฐานเชฟที่ควบคุมอัตราส่วนและเวลาเคี่ยวอย่างแม่นยำ เพื่อความอร่อยที่คงที่ทุกหม้อ</span>
+                    <span>
+                      {isEn
+                        ? "Iconic Peep Pitsadan flavor restored from mom's kitchen into calibrated chef standard ratios and simmering timing for consistent deliciousness."
+                        : "รสชาติระดับ 'เปิบพิสดาร' ที่หาทานยากในปัจจุบัน ถอดรหัสจากรสมือแม่สู่สูตรมาตรฐานเชฟที่ควบคุมอัตราส่วนและเวลาเคี่ยวอย่างแม่นยำ เพื่อความอร่อยที่คงที่ทุกหม้อ"}
+                    </span>
                   </div>
 
                   <div className="pt-2 flex items-center justify-between border-t border-[#4A3F35]/10 text-xs font-semibold text-[#9B1D30]">
-                    <span>สูตรมาตรฐานเชฟคงที่ทุกหม้อ</span>
+                    <span>{isEn ? "Chef standard consistency in every pot" : "สูตรมาตรฐานเชฟคงที่ทุกหม้อ"}</span>
                     <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      ดูรายละเอียดเมนู ➔
+                      {isEn ? "View Menu Details ➔" : "ดูรายละเอียดเมนู ➔"}
                     </span>
                   </div>
                 </div>
@@ -430,23 +436,22 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#F7ECD4]">
                     <img
                       src="/images/home/dish_pork_ribs.jpg"
-                      alt={secondary[0].title}
+                      alt={t.sideDishTitle}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="stamp-box">{secondary[0].tag}</span>
+                    <span className="stamp-box">{isEn ? "SUPPORTING DISH" : secondary[0].tag}</span>
                   </div>
                   <h4 className="text-base font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#9B1D30] transition-colors">
-                    {secondary[0].title}
+                    {t.sideDishTitle}
                   </h4>
                   <p className="text-xs text-[#786E64] font-light leading-relaxed">
-                    ซี่โครงหมูตุ๋นเต้าเจี้ยวโบราณไฟอ่อนจนเนื้อล่อนละลายในปาก
-                    เมนูคู่โต๊ะยอดนิยม
+                    {t.sideDishDesc}
                   </p>
                 </div>
                 <div className="pt-2 text-[11px] text-[#9B1D30] font-semibold flex items-center justify-between">
-                  <span>{secondary[0].role}</span>
+                  <span>{isEn ? "Harmonious Table Pairing" : secondary[0].role}</span>
                   <span>➔</span>
                 </div>
               </div>
@@ -462,23 +467,22 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#F7ECD4]">
                     <img
                       src="/images/home/dish_pumpkin_porridge.jpg"
-                      alt={secondary[1].title}
+                      alt={t.pumpkinTitle}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="stamp-box">{secondary[1].tag}</span>
+                    <span className="stamp-box">{isEn ? "HEALTH & WELLNESS" : secondary[1].tag}</span>
                   </div>
                   <h4 className="text-base font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#9B1D30] transition-colors">
-                    {secondary[1].title}
+                    {t.pumpkinTitle}
                   </h4>
                   <p className="text-xs text-[#786E64] font-light leading-relaxed">
-                    ข้าวหอมมะลิตุ๋นฟักทองหวานธรรมชาติ
-                    ตอบโจทย์ลูกค้าสายสุขภาพและกลุ่มครอบครัว
+                    {t.pumpkinDesc}
                   </p>
                 </div>
                 <div className="pt-2 text-[11px] text-[#9B1D30] font-semibold flex items-center justify-between">
-                  <span>{secondary[1].role}</span>
+                  <span>{isEn ? "Comfort & Wellness Choice" : secondary[1].role}</span>
                   <span>➔</span>
                 </div>
               </div>
@@ -494,7 +498,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-[#F7ECD4]">
                     <img
                       src="/images/menu/ready_to_heat_curry.jpg"
-                      alt="Ready-to-Heat & Smart Cooking Kit: อร่อยเหมือนมีแม่ทำให้กินที่บ้าน"
+                      alt={t.expansionTitle}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -504,14 +508,14 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                     </span>
                   </div>
                   <h4 className="text-base font-serif-thai font-bold text-[#4A3F35] group-hover:text-[#738C66] transition-colors leading-snug">
-                    Ready-to-Heat & Smart Cooking Kit: อร่อยเหมือนมีแม่ทำให้กินที่บ้าน
+                    {t.expansionTitle}
                   </h4>
                   <p className="text-xs text-[#786E64] font-light leading-relaxed">
-                    ต่อยอดความอบอุ่นสู่ช่องทางออนไลน์ ด้วยแกงกะหรี่จีนแพ็กสุญญากาศพร้อมอุ่นทานทันที (Ready-to-Heat) และชุดพร้อมปรุงใน 15 นาที (Cooking Kit)
+                    {t.expansionDesc}
                   </p>
                 </div>
                 <div className="pt-2 text-[11px] text-[#738C66] font-semibold flex items-center justify-between">
-                  <span>ขยายโอกาสทางธุรกิจสู่ครัวทุกบ้านทั่วประเทศ</span>
+                  <span>{isEn ? "Nationwide Scalable Opportunity" : "ขยายโอกาสทางธุรกิจสู่ครัวทุกบ้านทั่วประเทศ"}</span>
                   <span>➔</span>
                 </div>
               </div>
@@ -524,7 +528,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 onClick={() => onNavigate("menu")}
                 className="group inline-flex items-center gap-2 px-7 py-2.5 rounded-full border border-[#9B1D30] text-[#9B1D30] hover:bg-[#9B1D30] hover:text-white text-xs font-semibold transition-all duration-300 shadow-2xs hover:shadow-xs cursor-pointer"
               >
-                <span>ดูเมนูและสูตรอาหารทั้งหมด</span>
+                <span>{t.menuBtn}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -542,17 +546,17 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
           <Reveal>
             <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#9B1D30] block">
-                BUSINESS VISION & SCALABILITY
+                {t.bizTag}
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif-thai font-bold text-[#4A3F35] leading-normal sm:leading-relaxed lg:leading-[1.6]">
-                Modern Heritage Comfort Food
+                {t.bizTitle}
                 <br />
                 <span className="text-xl sm:text-2xl md:text-3xl text-[#4A3F35]/90 font-medium">
-                  จากความอบอุ่นในครัวแม่ สู่ธุรกิจ 3 ช่องทางที่เติบโตได้จริง
+                  {t.bizSub}
                 </span>
               </h2>
               <p className="text-xs sm:text-sm text-[#786E64] font-light mt-3 leading-relaxed max-w-2xl mx-auto">
-                ก้าวข้ามขีดจำกัดของร้านข้าวแกงยุคเก่า สู่การสร้างแบรนด์ใหม่ที่ไม่ได้พึ่งพาแค่คนเดินเข้าร้าน แต่พร้อมส่งต่อมื้ออาหารแสนอบอุ่นผ่าน 3 รูปแบบบริการที่ตอบโจทย์ชีวิตคนยุคนี้
+                {t.bizDesc}
               </p>
             </div>
           </Reveal>
@@ -569,7 +573,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-20 h-20 mx-auto flex items-center justify-center">
                     <img
                       src="/images/home/model_dine_in.png"
-                      alt="Dine-in & Delivery (หน้าร้านต้นแบบ)"
+                      alt={t.channel1Title}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-xs"
                     />
                   </div>
@@ -577,17 +581,17 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="text-center space-y-1.5">
                     <span className="stamp-badge">CHANNEL 01</span>
                     <h3 className="text-base sm:text-lg font-serif-thai font-bold text-[#4A3F35]">
-                      Dine-in & Delivery (หน้าร้านต้นแบบ)
+                      {t.channel1Title}
                     </h3>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light text-center leading-relaxed">
-                    เสิร์ฟความอบอุ่นสดใหม่จากหน้าเตา เริ่มต้นพิสูจน์โมเดลธุรกิจและรับฟีดแบ็กจริงที่ Test Kitchen at The Food School เพื่อสร้างฐานลูกค้าที่รักในรสชาติและเป็นครัวกลางควบคุมมาตรฐาน
+                    {t.channel1Desc}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-[#4A3F35]/10 text-center text-xs font-semibold text-[#9B1D30]">
-                  <span>เสิร์ฟความอบอุ่นจากหน้าเตา ➔</span>
+                  <span>{t.channel1Margin} ➔</span>
                 </div>
               </div>
             </Reveal>
@@ -602,7 +606,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-20 h-20 mx-auto flex items-center justify-center">
                     <img
                       src="/images/home/model_ready_to_heat.png"
-                      alt="Ready-to-Heat Pouches (พร้อมอุ่นทาน 3 นาที)"
+                      alt={t.channel2Title}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-xs"
                     />
                   </div>
@@ -610,17 +614,17 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="text-center space-y-1.5">
                     <span className="stamp-badge">CHANNEL 02</span>
                     <h3 className="text-base sm:text-lg font-serif-thai font-bold text-[#4A3F35]">
-                      Ready-to-Heat Pouches (พร้อมอุ่นทาน 3 นาที)
+                      {t.channel2Title}
                     </h3>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light text-center leading-relaxed">
-                    แกงกะหรี่จีนและเมนูตุ๋นรสมือแม่แพ็กสุญญากาศเก็บความสด อุ่นร้อนพร้อมทานใน 3 นาที ตอบโจทย์คนทำงานคอนโดและครอบครัวที่อยากมีกับข้าวอร่อยๆ ติดตู้เย็นไว้ทานทุกวัน
+                    {t.channel2Desc}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-[#4A3F35]/10 text-center text-xs font-semibold text-[#9B1D30]">
-                  <span>อร่อยเหมือนแม่อุ่นกับข้าวรอที่บ้าน ➔</span>
+                  <span>{t.channel2Margin} ➔</span>
                 </div>
               </div>
             </Reveal>
@@ -635,7 +639,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                   <div className="w-20 h-20 mx-auto flex items-center justify-center">
                     <img
                       src="/images/home/model_cooking_kit.png"
-                      alt="Smart Cooking Kits (ชุดพร้อมปรุง 15 นาที)"
+                      alt={t.channel3Title}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-xs"
                     />
                   </div>
@@ -645,17 +649,17 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                       CHANNEL 03
                     </span>
                     <h3 className="text-base sm:text-lg font-serif-thai font-bold text-[#4A3F35]">
-                      Smart Cooking Kits (ชุดพร้อมปรุง 15 นาที)
+                      {t.channel3Title}
                     </h3>
                   </div>
 
                   <p className="text-xs sm:text-sm text-[#786E64] font-light text-center leading-relaxed">
-                    ชุดวัตถุดิบพร้อมซอสแกงกะหรี่เบสเข้มข้นและ QR Code วิดีโอสอนทำ ให้ลูกค้าสนุกกับการปรุงอาหารรสมือแม่ทานเองที่บ้าน ขยายฐานลูกค้าออนไลน์จัดส่งได้ทั่วประเทศ
+                    {t.channel3Desc}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-[#4A3F35]/10 text-center text-xs font-semibold text-[#738C66]">
-                  <span>ส่งต่อความอร่อยทั่วประเทศ ➔</span>
+                  <span>{t.channel3Margin} ➔</span>
                 </div>
               </div>
             </Reveal>
@@ -667,7 +671,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 onClick={() => onNavigate("business")}
                 className="group inline-flex items-center gap-2 px-7 py-2.5 rounded-full border border-[#9B1D30] text-[#9B1D30] hover:bg-[#9B1D30] hover:text-white text-xs font-semibold transition-all duration-300 shadow-2xs hover:shadow-xs cursor-pointer"
               >
-                <span>ดูแผนธุรกิจ & โมเดลการเติบโต</span>
+                <span>{t.bizBtn}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -683,7 +687,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
         {/* Background Image: ไว้ด้านล่าง.png */}
         <img
           src="/images/home/bottom_banner.png"
-          alt="ไว้ด้านล่าง - Let's Create a Delicious Future Together"
+          alt="Let's Create a Delicious Future Together"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         {/* Soft, luminous cream overlay to ensure text legibility */}
@@ -696,11 +700,10 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 “Let's Create a Delicious Future Together”
               </span>
               <h3 className="text-xl sm:text-2xl font-serif-thai font-bold text-[#4A3F35] drop-shadow-xs">
-                ร่วมเดินทางไปกับเรา เพื่อสืบสานและสร้างสรรค์อนาคตอาหารไทย
+                {t.closingTitle}
               </h3>
               <p className="text-xs sm:text-sm text-[#786E64] font-medium max-w-lg mx-auto leading-relaxed pt-1 drop-shadow-xs">
-                ต่อยอดมรดกแห่งรสชาติไทยในตำนาน สู่โอกาสทางธุรกิจที่ยั่งยืน
-                และความสุขในทุกมื้ออาหาร
+                {t.closingSub}
               </p>
             </div>
           </Reveal>
@@ -713,14 +716,14 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#9B1D30] hover:bg-[#B0303C] text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>ดูวิดีโอแนะนำตัว (30s)</span>
+                <span>{t.pitchCta || t.watchPitch}</span>
               </button>
 
               <button
                 onClick={() => onNavigate("heritage")}
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/95 hover:bg-[#F7ECD4] text-[#4A3F35] text-xs sm:text-sm font-semibold border border-[#EFE2C6] shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
               >
-                <span>เริ่มต้นจากเรื่องราว</span>
+                <span>{isEn ? "Start with Our Story" : "เริ่มต้นจากเรื่องราว"}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -728,8 +731,7 @@ export default function HomeView({ onNavigate, onOpenPitch }) {
 
           <Reveal delay={250}>
             <div className="pt-8 text-[11px] text-[#786E64] font-medium tracking-wide border-t border-[#4A3F35]/15 mt-6">
-              {candidateInfo.name} ({candidateInfo.nickname}) •{" "}
-              {candidateInfo.brand} • {candidateInfo.competition}
+              {isEn ? "Nidnipa Kiattikunnathum (Rin) • Chefpreneur 2026 • The Food School" : `${candidateInfo.name} (${candidateInfo.nickname}) • ${candidateInfo.brand} • ${candidateInfo.competition}`}
             </div>
           </Reveal>
         </div>

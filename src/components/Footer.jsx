@@ -1,8 +1,14 @@
 import React from 'react';
 import { Printer, PlayCircle, ArrowUp } from 'lucide-react';
 import { candidateInfo } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../data/translations';
 
 export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
+  const { lang, isEn } = useLanguage();
+  const tNav = translations[lang].nav;
+  const tFoot = translations[lang].footer;
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -29,7 +35,7 @@ export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
                 {candidateInfo.brand}
               </span>
               <span className="text-[10px] text-[#786E64] tracking-widest uppercase block">
-                CHEFPRENEUR 2026
+                {tNav.chefpreneurYear}
               </span>
             </div>
           </button>
@@ -40,35 +46,35 @@ export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
               onClick={() => { onNavigate('home'); scrollToTop(); }}
               className="hover:text-[#9B1D30] transition-colors cursor-pointer"
             >
-              Home
+              {tNav.home}
             </button>
             <span className="text-[#EFE2C6] hidden sm:inline">•</span>
             <button
               onClick={() => { onNavigate('heritage'); scrollToTop(); }}
               className="hover:text-[#9B1D30] transition-colors cursor-pointer"
             >
-              Our Heritage
+              {tNav.heritage}
             </button>
             <span className="text-[#EFE2C6] hidden sm:inline">•</span>
             <button
               onClick={() => { onNavigate('hybrid'); scrollToTop(); }}
               className="hover:text-[#9B1D30] transition-colors cursor-pointer"
             >
-              Hybrid Skills
+              {tNav.hybrid}
             </button>
             <span className="text-[#EFE2C6] hidden sm:inline">•</span>
             <button
               onClick={() => { onNavigate('menu'); scrollToTop(); }}
               className="hover:text-[#9B1D30] transition-colors cursor-pointer"
             >
-              Signature Dishes
+              {tNav.menu}
             </button>
             <span className="text-[#EFE2C6] hidden sm:inline">•</span>
             <button
               onClick={() => { onNavigate('business'); scrollToTop(); }}
               className="hover:text-[#9B1D30] transition-colors cursor-pointer"
             >
-              Business Concept
+              {tNav.business}
             </button>
           </nav>
 
@@ -77,9 +83,9 @@ export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-[#EFE2C6] text-[#786E64] hover:bg-[#9B1D30] hover:text-white hover:border-[#9B1D30] transition shadow-2xs text-xs font-medium cursor-pointer"
-              title="กลับด้านบน"
+              title={tFoot.backToTop}
             >
-              <span>กลับด้านบน</span>
+              <span>{tFoot.backToTop}</span>
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -94,19 +100,19 @@ export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-[#EFE2C6] text-[#4A3F35] font-medium hover:bg-[#9B1D30] hover:text-white hover:border-[#9B1D30] transition shadow-2xs text-[11px] cursor-pointer"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>พิมพ์ Portfolio (PDF 4 หน้า)</span>
+              <span>{tFoot.printPdf}</span>
             </button>
             <button
               onClick={onOpenPitch}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-[#EFE2C6] text-[#4A3F35] font-medium hover:bg-[#9B1D30] hover:text-white hover:border-[#9B1D30] transition shadow-2xs text-[11px] cursor-pointer"
             >
               <PlayCircle className="w-3.5 h-3.5" />
-              <span>ดูวิดีโอแนะนำตัว (30s)</span>
+              <span>{tFoot.watchPitch}</span>
             </button>
           </div>
 
           <span className="text-[11px] font-light">
-            © 2026 {candidateInfo.brand} • {candidateInfo.name} ({candidateInfo.nickname}) • {candidateInfo.competition}
+            © 2026 {candidateInfo.brand} • {isEn ? candidateInfo.englishName : candidateInfo.name} ({candidateInfo.nickname}) • {candidateInfo.competition}
           </span>
         </div>
 
