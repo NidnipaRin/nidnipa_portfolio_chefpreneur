@@ -16,7 +16,7 @@ export const translations = {
       tagline:
         "ชุบชีวิตรสชาติมรดกเปิปพิสดาร สู่จานอาหารที่อบอุ่นเหมือนได้กลับมากินข้าวที่บ้าน",
       backToTop: "กลับด้านบน",
-      printPdf: "พิมพ์ Portfolio (PDF 4 หน้า)",
+      printPdf: "ดาวน์โหลด PDF Portfolio",
       watchPitch: "ดูวิดีโอแนะนำตัว 30 วินาที",
       candidateName: "นิษฐ์นิภา เกียรติคุณธรรม (ริน)",
       role: "ผู้สมัครแข่งขัน The Food School Presents : Chefpreneur Competition 2026",
@@ -37,7 +37,7 @@ export const translations = {
       heroDesc:
         "ไม่ได้กลับมาเพื่อเปิดร้านเก่าของอากง... แต่กลับมาเพื่อส่งต่อแกงกะหรี่จีนที่แม่ทำให้กินมาตลอด 35 ปี ในมาตรฐานใหม่ที่เบาสบายท้อง พิถีพิถัน และพร้อมเป็นมื้อที่อบอุ่นใจสำหรับทุกคน",
       exploreHeritage: "PDF Portfolio Download",
-      watchPitch: "ดูวิดีโอแนะนำตัว (30s) ▶",
+      watchPitch: "ดูวิดีโอแนะนำตัว ▶",
       scrollToExplore: "Scroll to explore",
 
       // Section 2: Our Heritage
@@ -217,7 +217,7 @@ export const translations = {
       tagline:
         "Reviving a 35-year legendary heritage into warm, comforting meals that feel like coming home.",
       backToTop: "Back to Top",
-      printPdf: "Print Portfolio (4-Page PDF)",
+      printPdf: "Download PDF Portfolio",
       watchPitch: "Watch 30-Sec Pitch Video",
       candidateName: "Nidnipa Kiattikunnathum (Rin)",
       role: "Candidate for The Food School Presents : Chefpreneur Competition 2026",
@@ -233,7 +233,7 @@ export const translations = {
       heroDesc:
         "Grandfather’s legendary recipe, lovingly kept alive by Mom—now lighter, meticulously crafted, and ready to warm your heart.",
       exploreHeritage: "PDF Portfolio Download",
-      watchPitch: "Watch Pitch Video) ▶",
+      watchPitch: "Watch Pitch Video ▶",
       scrollToExplore: "Scroll to explore",
 
       // Section 2: Our Heritage
@@ -325,7 +325,7 @@ export const translations = {
       closingSub:
         "100% Ready to prove dedication and capability in the Chefpreneur Competition 2026",
       pitchCta: "Watch 30-Second Video Pitch",
-      pdfCta: "Download Portfolio PDF (4 Pages)",
+      pdfCta: "Download Portfolio PDF",
     },
     heritagePage: {
       tag: "OUR HERITAGE • 1991 TO 2026",

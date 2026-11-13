@@ -1,5 +1,5 @@
 import React from 'react';
-import { Printer, PlayCircle, ArrowUp } from 'lucide-react';
+import { Download, PlayCircle, ArrowUp } from 'lucide-react';
 import { candidateInfo } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../data/translations';
@@ -99,7 +99,7 @@ export default function Footer({ onNavigate, onOpenPitch, onOpenPrint }) {
               onClick={onOpenPrint}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 border border-[#EFE2C6] text-[#4A3F35] font-medium hover:bg-[#9B1D30] hover:text-white hover:border-[#9B1D30] transition shadow-2xs text-[11px] cursor-pointer"
             >
-              <Printer className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5" />
               <span>{tFoot.printPdf}</span>
             </button>
             <button

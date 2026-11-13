@@ -6,6 +6,7 @@ import HybridEdgePage from "./pages/HybridEdgePage";
 import MenuPage from "./pages/MenuPage";
 import BusinessConceptPage from "./pages/BusinessConceptPage";
 import PitchModal from "./components/PitchModal";
+import PdfDownloadModal from "./components/PdfDownloadModal";
 import PrintPortfolio from "./components/PrintPortfolio";
 import Footer from "./components/Footer";
 
@@ -13,6 +14,7 @@ export default function App() {
   // Navigation State parsed from URL Hash: 'home' | 'heritage' | 'hybrid' | 'menu' | 'business'
   const [currentPage, setCurrentPage] = useState("home");
   const [isPitchOpen, setIsPitchOpen] = useState(false);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
 
   // Parse URL hash on load and when browser Back/Forward is clicked
   useEffect(() => {
@@ -62,8 +64,8 @@ export default function App() {
     navigateTo("home");
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handleOpenPdfModal = () => {
+    setIsPdfModalOpen(true);
   };
 
   return (
@@ -102,7 +104,7 @@ export default function App() {
             <HomeView
               onNavigate={navigateTo}
               onOpenPitch={() => setIsPitchOpen(true)}
-              onOpenPrint={handlePrint}
+              onOpenPrint={handleOpenPdfModal}
             />
           )}
 
@@ -128,13 +130,19 @@ export default function App() {
       <Footer
         onNavigate={navigateTo}
         onOpenPitch={() => setIsPitchOpen(true)}
-        onOpenPrint={handlePrint}
+        onOpenPrint={handleOpenPdfModal}
       />
 
-      {/* Pitch Modal (Rehearsal Timer) */}
+      {/* Pitch Modal */}
       <PitchModal isOpen={isPitchOpen} onClose={() => setIsPitchOpen(false)} />
 
-      {/* Exact 4-page PDF application layout for print / save as PDF */}
+      {/* PDF Download Confirmation Modal */}
+      <PdfDownloadModal
+        isOpen={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+      />
+
+      {/* PDF application layout for print / save as PDF */}
       <PrintPortfolio />
     </div>
   );
